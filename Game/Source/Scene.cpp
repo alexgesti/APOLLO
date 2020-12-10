@@ -4,7 +4,6 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
-#include "Map.h"
 #include "Player.h"
 #include "Audio.h"
 
@@ -40,8 +39,6 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	// L03: DONE: Load map
-	app->map->Load("mapa.tmx");
 	//spritePillar = app->tex->Load("Assets/Screens/Gameplay/save_point_saving-x64.png");
 
 	NotSceneActived = false;
@@ -63,9 +60,6 @@ bool Scene::Update(float dt)
 		app->render->camera.x = app->player->position.x + ((app->render->camera.w / 2) - app->player->playerWH / 2);		 
 		app->render->camera.y = app->player->position.y + ((app->render->camera.h / 2) - app->player->playerWH / 2);
 	}
-
-	// Draw map
-	app->map->Draw();
 
 	//PillarAnim->Update();
 

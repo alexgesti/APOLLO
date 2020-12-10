@@ -2,7 +2,6 @@
 #include "Input.h"
 #include "Textures.h"
 #include "Input.h"
-#include "Map.h"
 #include "Textures.h"
 #include "Render.h"
 #include "Window.h"
@@ -124,27 +123,6 @@ bool Player::Update(float dt)
 			else currentAnim = &deadLAnim;
 		}*/
 
-		if (CollisionFloorPlayer())
-		{
-			gravity = false;
-			int auxpos = position.y / 16;
-			position.y = auxpos * 16;
-		}
-
-		if (CollisionPlayer() == 2 && LookingR == true)
-		{
-			speedx = 0;
-			int auxpos = position.x / 8;
-			position.x = auxpos * 8;
-		}
-		else if (CollisionPlayer() == 3 && LookingR == false)
-		{
-			speedx = 0;
-			int auxpos = position.x / 8;
-			position.x = auxpos * 8;
-		}
-		else speedx = 8;
-
 	}
 
 	//Godmode
@@ -189,9 +167,20 @@ bool Player::PostUpdate()
 	bool ret = true;
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
-	app->render->DrawTexture(spriteSheet, -position.x, -position.y, &rect);
+	app->render->DrawTexture(spriteSheet, position.x, position.y, &rect);
 
 	return ret;
+}
+
+// Collision
+bool Player::CheckCollisionRec(iPoint positionMapPlayer, iPoint positionSuelo)
+{
+	/*if ((positionMapPlayer.x < (positionSuelo.x + )) && ((positionMapPlayer.x + ) > positionSuelo.x) &&
+		(positionMapPlayer.y < (positionSuelo.y + )) && ((positionMapPlayer.y + ) > positionSuelo.y)) return true;*/
+
+	// Base utilizable, recomendable hacer script que sea "fisics" o "colliders" y tenga esta base por posicion, ahorra muchos problemas futuros
+
+	return false;
 }
 
 // Called before quitting
@@ -200,43 +189,4 @@ bool Player::CleanUp()
 	LOG("Freeing player");
 
 	return true;
-}
-
-int Player::CollisionPlayer()
-{
-	iPoint posMapPlayer[numnPoints];
-
-	for (int i = 0; i < numnPoints; i++)
-	{
-		posMapPlayer[i] = app->map->WorldToMap(-position.x + (int)pointsCollision[i][0], -position.y + (int)pointsCollision[i][1]);
-		if (CheckCollision(posMapPlayer[i]) == 3) return 1;
-		}
-	if (CheckCollision(posMapPlayer[numnPoints - 1]) == 1) return 2;
-	if (CheckCollision(posMapPlayer[numnPoints - 2]) == 1) return 3;
-
-	return false;
-}
-
-bool Player::CollisionFloorPlayer()
-{
-	iPoint posFloorPlayer[numnPoints];
-
-	for (int i = 0; i < numnPoints; i++)
-	{
-		posFloorPlayer[i] = app->map->WorldToMap(-position.x + (int)pointsFloorCollision[i][0], -position.y + (int)pointsFloorCollision[i][1]);
-		if (CheckCollision(posFloorPlayer[i]) == 1) return true;
-	}
-
-	return false;
-}
-
-int Player::CheckCollision(iPoint positionMapPlayer)
-{
-	if (app->map->data.layers.At(1)->data->Get(positionMapPlayer.x, positionMapPlayer.y) != 0) return 1;
-	if (app->map->data.layers.At(2)->data->Get(positionMapPlayer.x, positionMapPlayer.y) != 0) return 4;
-	if (app->map->data.layers.At(3)->data->Get(positionMapPlayer.x, positionMapPlayer.y) != 0) return 2;
-	if (app->map->data.layers.At(4)->data->Get(positionMapPlayer.x, positionMapPlayer.y) != 0) return 3;
-
-
-	return false;
 }

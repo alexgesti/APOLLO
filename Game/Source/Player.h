@@ -31,13 +31,11 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
+	// Collision
+	bool CheckCollisionRec(iPoint positionMapPlayer, iPoint positionSuelo);
+
 	// Called before quitting
 	bool CleanUp();
-
-	int CollisionPlayer();
-	bool CollisionFloorPlayer();
-
-	int CheckCollision(iPoint positionMapPlayer);
 
 public:
 	bool gravity = false;

@@ -9,7 +9,6 @@
 #include "SceneLogo.h"
 #include "SceneLose.h"
 #include "SceneWin.h"
-#include "Map.h"
 #include "Player.h"
 #include "ModuleController.h"
 
@@ -33,7 +32,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	//sceneLogo = new SceneLogo();
 	//sceneLose = new SceneLose();
 	//sceneWin = new SceneWin();
-	map = new Map();
 	player = new Player();
 	modcontrol = new ModuleController();
 
@@ -43,7 +41,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(map);
 	AddModule(scene);
 	//AddModule(sceneIntro);
 	//AddModule(sceneLogo);
@@ -177,8 +174,8 @@ void App::FinishUpdate()
 	if (saveGameRequested == true) SaveGame();
 
 	static char title[256];
-	sprintf_s(title, 256, "Fisics APOLLO (Vsync: %i / Map:%dx%d / Camera position:%d %d)",
-		(int)app->render->Vsync ,app->map->data.width, app->map->data.height, app->render->camera.x, app->render->camera.y);
+	sprintf_s(title, 256, "Fisics APOLLO (Vsync: %i / Camera position:%d %d)",
+		(int)app->render->Vsync, app->render->camera.x, app->render->camera.y);
 
 	app->win->SetTitle(title);
 }

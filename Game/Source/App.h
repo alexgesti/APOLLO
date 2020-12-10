@@ -21,7 +21,6 @@ class Scene;
 //class SceneLogo;
 //class SceneLose;
 //class SceneWin;
-class Map;
 class Player;
 class ModuleController;
 
@@ -95,7 +94,6 @@ public:
 	//SceneLogo* sceneLogo;
 	//SceneLose* sceneLose;
 	//SceneWin* sceneWin;
-	Map* map;
 	Player* player;
 	ModuleController* modcontrol;
 

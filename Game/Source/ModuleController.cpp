@@ -9,7 +9,6 @@
 #include "SceneLogo.h"
 #include "SceneLose.h"
 #include "SceneWin.h"
-#include "Map.h"
 #include "Player.h"
 #include "ModuleController.h"
 
@@ -50,8 +49,6 @@ bool ModuleController::Awake(pugi::xml_node& config)
 	app->win->active = true;		// Windows
 	app->input->active = true;		// Input
 	app->tex->active = true;		// Texture
-	app->audio->active = true;		// Audio
-	app->map->active = true;		// Map
 	app->scene->active = true;		// Scene
 	//app->sceneIntro->active = true;	// SceneIntro
 	//app->sceneLogo->active = true;	// SceneLogo
@@ -97,14 +94,6 @@ bool ModuleController::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		{
-			if (app->map->showCollider == false)
-				app->map->showCollider = true;
-			else if (app->map->showCollider == true)
-				app->map->showCollider = false;
-		}
-
-		if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-		{
 			if (app->player->Godmode == false)
 				app->player->Godmode = true;
 			else if (app->player->Godmode == true)
@@ -144,7 +133,6 @@ bool ModuleController::Update(float dt)
 	{
 	case 0:	//Logo
 
-		app->map->active = false;				// Map
 		app->scene->active = false;				// Scene
 		app->scene->NotSceneActived = false;	// SceneCamera
 		app->player->active = false;			// Player
@@ -159,7 +147,6 @@ bool ModuleController::Update(float dt)
 
 	case 1:	//Intro
 
-		app->map->active = false;				// Map
 		app->scene->active = false;				// Scene
 		app->scene->NotSceneActived = false;	// SceneCamera
 		app->player->active = false;			// Player
@@ -172,7 +159,6 @@ bool ModuleController::Update(float dt)
 
 	case 2:	//Gameplay
 
-		app->map->active = true;				// Map
 		app->scene->active = true;				// Scene
 		app->scene->NotSceneActived = true;		// SceneCamera
 		app->player->active = true;				// Player
@@ -187,7 +173,6 @@ bool ModuleController::Update(float dt)
 
 	case 3:	//Ending
 
-		app->map->active = false;				// Map
 		app->scene->active = false;				// Scene
 		app->scene->NotSceneActived = false;	// SceneCamera
 		app->player->active = false;			// Player
@@ -200,7 +185,6 @@ bool ModuleController::Update(float dt)
 
 	case 4: //Win
 
-		app->map->active = false;				// Map
 		app->scene->active = false;				// Scene
 		app->scene->NotSceneActived = false;	// SceneCamera
 		app->player->active = false;			// Player

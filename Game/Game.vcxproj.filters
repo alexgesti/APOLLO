@@ -15,7 +15,6 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\ModuleController.cpp" />
     <ClCompile Include="Source\SceneIntro.cpp" />
@@ -56,7 +55,6 @@
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
       <Filter>External\PugiXml</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils</Filter>
