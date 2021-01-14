@@ -14,6 +14,8 @@ Scene::Scene() : Module()
 {
 	name.Create("scene");
 
+
+
 	//pillar animation
 	/*pillar.PushBack({ 0, 0, 48, 80 });
 	pillar.PushBack({ 48, 0, 48, 80 });
@@ -41,6 +43,8 @@ bool Scene::Start()
 {
 	//spritePillar = app->tex->Load("Assets/Screens/Gameplay/save_point_saving-x64.png");
 
+	backtext = app->tex->Load("Assets/Screens/Gameplay/background.png");
+
 	NotSceneActived = false;
 
 	return true;
@@ -57,8 +61,11 @@ bool Scene::Update(float dt)
 {
 	if (NotSceneActived)
 	{
-		app->render->camera.x = app->player->position.x + ((app->render->camera.w / 2) - app->player->playerWH / 2);		 
-		app->render->camera.y = app->player->position.y + ((app->render->camera.h / 2) - app->player->playerWH / 2);
+		//app->render->camera.x = app->player->position.x + ((app->render->camera.w / 2) - app->player->playerWH / 2);		 
+		//app->render->camera.y = app->player->position.y + ((app->render->camera.h / 2) - app->player->playerWH / 2);
+		
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
 	}
 
 	//PillarAnim->Update();
@@ -74,6 +81,9 @@ bool Scene::PostUpdate()
 
 	//SDL_Rect rect = PillarAnim->GetCurrentFrame();
 	//app->render->DrawTexture(spritePillar, 2057, 1905, &rect);
+
+	SDL_Rect backrect = {0, 0, app->render->camera.w, app->render->camera.h};
+	app->render->DrawTexture(backtext, 0, 0, &backrect);
 	
 	return ret;
 }

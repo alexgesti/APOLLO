@@ -44,7 +44,7 @@ public:
 public:
 
 private:
-	SDL_Texture* img;
+	SDL_Texture* backtext;
 	int camX;
 	int camY;
 

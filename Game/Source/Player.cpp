@@ -17,13 +17,15 @@ Player::Player() : Module()
 {
 	name.Create("player");
 
-	//idle rigth animation
-	/*idleRAnim.PushBack({ 0, 0, 64, 64 });
-	idleRAnim.PushBack({ 64, 0, 64, 64 });
-	idleRAnim.PushBack({ 128, 0, 64, 64 });
-	idleRAnim.PushBack({ 192, 0, 64, 64 });
-	idleRAnim.loop = true;
-	idleRAnim.speed = 0.15f;*/
+	//idle animation
+	idleAnim.PushBack({ 0, 0, 64, 140 });
+	idleAnim.loop = false;
+
+	//move animation
+	moveAnim.PushBack({ 64, 0, 64, 140 });
+	moveAnim.PushBack({ 128, 0, 64, 140 });
+	moveAnim.loop = true;
+	moveAnim.speed = 0.15f;
 }
 
 // Destructor
@@ -43,12 +45,12 @@ bool Player::Awake()
 bool Player::Start()
 {
 	//Load texture
-	//spriteSheet = app->tex->Load("Assets/Characters/Hero/herochar_spriteSheet.png");
+	spriteSheet = app->tex->Load("Assets/Characters/Player/player.png");
 
-	currentAnim = &idleRAnim;
+	currentAnim = &moveAnim;
 
-	position.x = 0;
-	position.y = 0;
+	position.x = app->render->camera.w / 2;
+	position.y = app->render->camera.h / 2;
 
 	return true;
 }
@@ -62,9 +64,11 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
+	currentAnim->Update();
+
 	if (Godmode == false)
 	{
-		//Gravity
+		/*//Gravity
 		if (gravity == true && dead == false)
 		{
 			position.y += speedy;
@@ -106,7 +110,7 @@ bool Player::Update(float dt)
 			&& dead == false)
 		{
 			gravity = false;
-		}
+		}*/
 
 		//Die
 		/*if (life <= 0)
@@ -128,7 +132,7 @@ bool Player::Update(float dt)
 	//Godmode
 	if (Godmode == true)
 	{
-		gravity = false;
+		/*gravity = false;
 		speedx = 8;
 
 		//Mov left
@@ -153,10 +157,8 @@ bool Player::Update(float dt)
 
 		//Mov down
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE)
-			position.y += speedx;
+			position.y += speedx;*/
 	}
-
-	currentAnim->Update();
 
 	return true;
 }

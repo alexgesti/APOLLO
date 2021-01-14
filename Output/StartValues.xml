@@ -4,7 +4,6 @@
 	<input />
 	<textures />
 	<audio />
-	<map />
 	<scene>
 		<Player />
 		<Scene />

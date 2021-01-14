@@ -41,8 +41,6 @@ public:
 	bool gravity = false;
 	bool Godmode = false;
 	bool dead = false;
-	bool LookingR = true;
-	bool WasLookingR = true;
 
 	float speedx = 8;
 	float speedy = 8;
@@ -55,8 +53,8 @@ public:
 
 	Animation* currentAnim;
 
-	Animation idleRAnim;
-	Animation idleLAnim;
+	Animation idleAnim;
+	Animation moveAnim;
 
 	Colliders* playerCollider = nullptr;
 
