@@ -9,6 +9,7 @@
 #include "ModuleController.h"
 #include "ScenePause.h"
 
+#include <math.h>
 #include "Defs.h"
 #include "Log.h"
 
@@ -51,6 +52,8 @@ bool Player::Start()
 
 	position.x = app->render->camera.w / 2;
 	position.y = app->render->camera.h / 2;
+	vel = { 5,5 };
+	angle = 0;
 
 	return true;
 }
@@ -64,6 +67,26 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
+	dt *= 100;
+
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	{
+		position.y -= vel.x * cos(angle * M_PI / 180);
+		position.x += vel.x * sin(angle * M_PI / 180);
+	}
+
+	//Rotation
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		angle -= 5;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		angle += 5;
+	}
+
+	if (position.y <= -145) position.y = app->render->camera.h;
+
 	currentanim->Update();
 
 	return true;
@@ -75,7 +98,7 @@ bool Player::PostUpdate()
 	bool ret = true;
 
 	SDL_Rect rect = currentanim->GetCurrentFrame();
-	app->render->DrawTexture(spritesheet, position.x, position.y, &rect);
+	app->render->DrawTexture(spritesheet, position.x, position.y, &rect, NULL, angle);
 
 	return ret;
 }

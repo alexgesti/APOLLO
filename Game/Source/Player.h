@@ -5,6 +5,8 @@
 
 #include "Animation.h"
 
+#define M_PI 3.14159265358979323846
+
 struct SDL_Texture;
 
 class Player : public Module
@@ -40,19 +42,9 @@ public:
 	int CheckCollision(iPoint positionMapPlayer);
 
 public:
-	bool gravity = false;
-	bool jump = true;
-	bool godmode = false;
-	bool dead = false;
-
-	float speedx = 8;
-	float speedy = 8;
-
-	//Player dimensions
-	int playerWH = 64;
-	int life = 3;
-
-	iPoint position;
+	fPoint position;
+	iPoint vel;
+	float angle;
 
 	Animation* currentanim;
 	Animation* currentanimcoll;
@@ -60,16 +52,9 @@ public:
 	Animation idleanim;
 	Animation moveanim;
 
-	Colliders* playercollider = nullptr;
-
 private:
 	SDL_Texture* spritesheet = nullptr;
 
-	static const int numnpoints = 4;
-	int pointscollision[numnpoints][2] = { {-8, 0}, {64, 0}, {-8, 55}, {64, 55} };
-	
-public:
-	int pointsfloorcollision[numnpoints][2] = { {8, 56}, {48, 56}, {8, 64}, {48, 64} };
 };
 
 #endif // __SCENE_H__
