@@ -44,6 +44,8 @@ bool Scene::Start()
 	//spritePillar = app->tex->Load("Assets/Screens/Gameplay/save_point_saving-x64.png");
 
 	backtext = app->tex->Load("Assets/Screens/Gameplay/background.png");
+	earthtex = app->tex->Load("Assets/Screens/Gameplay/earth.png");
+	moontex = app->tex->Load("Assets/Screens/Gameplay/landplace.png");
 
 	notsceneactived = false;
 
@@ -81,9 +83,17 @@ bool Scene::PostUpdate()
 
 	//SDL_Rect rect = PillarAnim->GetCurrentFrame();
 	//app->render->DrawTexture(spritePillar, 2057, 1905, &rect);
-
 	SDL_Rect backrect = { 0, 0, app->render->camera.w, app->render->camera.h };
 	app->render->DrawTexture(backtext, 0, 0, &backrect);
+
+	for (int i = 0; i < 5; i++)
+	{
+		app->render->DrawTexture(moontex, app->render->camera.w - 216, 256 * i, NULL);
+	}
+
+	app->render->DrawTexture(earthtex, -108, app->render->camera.h - 216 * 2, NULL);
+
+	
 
 	return ret;
 }

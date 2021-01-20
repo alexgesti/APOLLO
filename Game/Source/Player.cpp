@@ -52,7 +52,7 @@ bool Player::Start()
 
 	position.x = app->render->camera.w / 2;
 	position.y = app->render->camera.h / 2;
-	vel = { 5,5 };
+	vel = 5;
 	angle = 0;
 
 	return true;
@@ -69,23 +69,56 @@ bool Player::Update(float dt)
 {
 	dt *= 100;
 
+	// Movement
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		position.y -= vel.x * cos(angle * M_PI / 180);
-		position.x += vel.x * sin(angle * M_PI / 180);
+		if (acc < 1.5f) acc += 0.01f * dt;
+		else acc = 1.5f;
+	}
+	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		if (acc > -1.5f) acc -= 0.01f * dt;
+		else acc = -1.5f;
+	}
+	else
+	{
+		if (acc < 1.51f && acc >= 0.01f) acc -= 0.01f * dt;
+		else if (acc > -1.51f && acc <= -0.01f) acc += 0.01f * dt;
+		else if (acc < 0.01f && acc > -0.01f) acc = 0;
 	}
 
-	//Rotation
+	position.y -= vel * cos(angle * M_PI / 180) * acc;
+	position.x += vel * sin(angle * M_PI / 180) * acc;
+
+	// Rotation
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		angle -= 5;
+		if (angle_rotation_value > -2) angle_rotation_value -= 0.1f;
+		else angle_rotation_value = -2;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		angle += 5;
+		if (angle_rotation_value < 2) angle_rotation_value += 0.1f;
+		else angle_rotation_value = 2;
 	}
+	else
+	{
+		if (angle_rotation_value < 2.1f && angle_rotation_value >= 0.2f) angle_rotation_value -= 0.1f * dt;
+		else if (angle_rotation_value > -2.1f && angle_rotation_value <= -0.2f) angle_rotation_value += 0.1f * dt;
+		else if (angle_rotation_value < 0.19f && angle_rotation_value > -0.19f) angle_rotation_value = 0;
+	}
+	
+	angle += angle_rotation_value;
 
+	// Limits
 	if (position.y <= -145) position.y = app->render->camera.h;
+	else if (position.y >= app->render->camera.h) position.y = -145;
+
+	if (position.x < 0) position.x = 0;
+
+	// Animation
+	if (acc == 0) currentanim = &idleanim;
+	else currentanim = &moveanim;
 
 	currentanim->Update();
 

@@ -42,9 +42,11 @@ public:
 	int CheckCollision(iPoint positionMapPlayer);
 
 public:
-	fPoint position;
-	iPoint vel;
-	float angle;
+	fPoint position;	// Position
+	int vel;			// Velocity/Speed
+	float acc;			// Acceleration
+	float angle;		// Angle
+	float angle_rotation_value;
 
 	Animation* currentanim;
 	Animation* currentanimcoll;

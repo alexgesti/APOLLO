@@ -47,6 +47,8 @@ public:
 private:
 
 	SDL_Texture* backtext;
+	SDL_Texture* earthtex;
+	SDL_Texture* moontex;
 
 	int camX;
 	int camY;
