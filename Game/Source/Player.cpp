@@ -74,17 +74,15 @@ bool Player::Update(float dt)
 	{
 		if (acc < 1.5f) acc += 0.01f * dt;
 		else acc = 1.5f;
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		if (acc > -1.5f) acc -= 0.01f * dt;
-		else acc = -1.5f;
+
+		currentanim = &moveanim;
 	}
 	else
 	{
-		if (acc < 1.51f && acc >= 0.01f) acc -= 0.01f * dt;
-		else if (acc > -1.51f && acc <= -0.01f) acc += 0.01f * dt;
-		else if (acc < 0.01f && acc > -0.01f) acc = 0;
+		if (acc < 1.51f && acc >= 0.01f) acc -= 0.005f * dt;
+		else if (acc < 0.01f) acc = 0;
+
+		currentanim = &idleanim;
 	}
 
 	position.y -= vel * cos(angle * M_PI / 180) * acc;
@@ -125,12 +123,6 @@ bool Player::Update(float dt)
 	else if (position.y >= app->render->camera.h) position.y = -145;
 
 	if (position.x < 0) position.x = 0;
-
-	// Animation
-	if (acc == 0) currentanim = &idleanim;
-	else currentanim = &moveanim;
-
-	LOG("%f", position.x);
 
 	currentanim->Update();
 
