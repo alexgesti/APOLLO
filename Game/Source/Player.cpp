@@ -108,6 +108,16 @@ bool Player::Update(float dt)
 		else if (angle_rotation_value < 0.19f && angle_rotation_value > -0.19f) angle_rotation_value = 0;
 	}
 	
+	//gravity
+	if (position.x >= 1165)
+	{
+		//position.y = -1165;
+	}
+	else if (position.x >= 810)
+	{
+		position.x += 1.0f;
+	}
+
 	angle += angle_rotation_value;
 
 	// Limits
@@ -119,6 +129,8 @@ bool Player::Update(float dt)
 	// Animation
 	if (acc == 0) currentanim = &idleanim;
 	else currentanim = &moveanim;
+
+	LOG("%f", position.x);
 
 	currentanim->Update();
 
