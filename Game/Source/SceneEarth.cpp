@@ -34,6 +34,12 @@ bool SceneEarth::Start()
 {
 	terratext = app->tex->Load("Assets/Screens/Gameplay/terrariacaptura.png");
 
+	gameovertex = app->tex->Load("Assets/Screens/Gameplay/gameover.png");
+	gameoversound = app->audio->LoadFx("Assets/Audio/Music/gameover.ogg");
+	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
+
+	gameoverpos.x = app->render->camera.w;
+
 	grav = 0;
 
 	return true;
@@ -48,24 +54,61 @@ bool SceneEarth::PreUpdate()
 // Called each loop iteration
 bool SceneEarth::Update(float dt)
 { 
+	dt *= 100;
+
 	//Camera
 	app->render->camera.x = 0;
-	if(app->player->position.y >= 0) app->render->camera.y = -app->player->position.y * 1.5;
+	if(app->player->position.y >= 0 && app->player->position.y <= 3139) app->render->camera.y = -app->player->position.y * 1.5;
 
 	if (app->modcontrol->blockx == false)
 	{
 		//Buoyancy
 		if (app->player->position.y > 447)
 		{
-
 			if (app->player->position.x < 385 || app->player->position.x > 910)
-			{
-
+			{				
+				if (app->player->acc > 0 && change == false)
+				{
+					app->player->acc -= 0.1f;
+					grav += 0.25f;
+				}
+				if (app->player->acc <= 0)
+				{
+					change = true;
+					app->player->position.y -= grav * dt;
+					grav -= 0.15f;
+				}
 			}
 			else
 			{
+				app->player->dead = true;
 
+				if (onetimesoundexplode == false)
+				{
+					app->audio->PlayFx(explosionsound);
+
+					onetimesoundexplode = true;
+				}
+
+				if (app->player->explosionanim.FinishedAlready)
+				{
+					if (gameoveronetimemusic == false)
+					{
+						app->audio->PlayFx(gameoversound);
+
+						gameoveronetimemusic = true;
+					}
+
+					gameoverpos.x -= 50;
+
+					if (gameoverpos.x <= 0) gameoverpos.x = 0;
+				}
 			}
+		}
+		else 
+		{
+			app->player->vel = 1;
+			if(app->player->acc < 7.0f) app->player->acc += 0.05f;
 		}
 	}
 	else
@@ -79,10 +122,36 @@ bool SceneEarth::Update(float dt)
 			grav = 0.0f;
 		}
 
-		app->player->position.y += grav;
+		app->player->position.y += grav * dt;
+
+		if(grav >= 1)
+		{
+			app->player->dead = true;
+
+			if (onetimesoundexplode == false)
+			{
+				app->audio->PlayFx(explosionsound);
+
+				onetimesoundexplode = true;
+			}
+		}
+
+		if (app->player->explosionanim.FinishedAlready)
+		{
+			if (gameoveronetimemusic == false)
+			{
+				app->audio->PlayFx(gameoversound);
+
+				gameoveronetimemusic = true;
+			}
+
+			gameoverpos.x -= 50;
+
+			if (gameoverpos.x <= 0) gameoverpos.x = 0;
+		}
 	}
 
-	LOG("%f %f %f %f %f", app->player->position.x, app->player->position.y, app->player->vel, app->player->acc, grav);
+	LOG("%f %f %f", app->player->acc, app->player->vel, grav);
 
 	return true;
 }
@@ -93,6 +162,12 @@ bool SceneEarth::PostUpdate()
 	bool ret = true;
 	
 	app->render->DrawTexture(terratext, 0, app->render->camera.y);
+
+	if (app->player->explosionanim.FinishedAlready)
+	{
+		SDL_Rect gameoverrect = { 0, 0, app->render->camera.w, app->render->camera.h };
+		app->render->DrawTexture(gameovertex, gameoverpos.x, -app->render->camera.y - 30, &gameoverrect);
+	}
 
 	return ret;
 }

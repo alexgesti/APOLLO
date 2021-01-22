@@ -57,10 +57,6 @@ private:
 	SDL_Texture* water = nullptr;
 	SDL_Texture* explosionsheet = nullptr;
 
-	uint explosionsound;
-
-	bool onetimesoundexplode = false;
-
 };
 
 #endif // __SCENE_H__

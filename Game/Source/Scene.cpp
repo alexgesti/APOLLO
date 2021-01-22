@@ -34,9 +34,10 @@ bool Scene::Start()
 	backtext = app->tex->Load("Assets/Screens/Gameplay/background.png");
 	earthtex = app->tex->Load("Assets/Screens/Gameplay/earth.png");
 	moontex = app->tex->Load("Assets/Screens/Gameplay/landplace.png");
+	
 	gameovertex = app->tex->Load("Assets/Screens/Gameplay/gameover.png");
-
 	gameoversound = app->audio->LoadFx("Assets/Audio/Music/gameover.ogg");
+	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
 
 	gameoverpos.x = app->render->camera.w;
 
@@ -52,8 +53,45 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	dt *= 100;
+
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
+
+	// Limits
+	if (app->player->position.y <= -145) app->player->position.y = app->render->camera.h;
+	if (app->player->position.y >= app->render->camera.h) app->player->position.y = -145;
+
+	// Gravity moon
+	if (app->player->position.x >= 810)
+	{
+		app->player->position.x += 0.75f * dt;
+	}
+
+	// Moon aterrizaje
+	if (app->player->position.x >= 1125 &&
+		app->player->angle <= 275 &&
+		app->player->angle >= 265 ||
+		app->player->position.x >= 1125 &&
+		app->player->angle <= -85 &&
+		app->player->angle >= -95)
+	{
+		app->player->position.x = 1125;
+		app->player->angle = -90;
+	}
+	else if (app->player->position.x >= 1125)
+	{
+		app->player->position.x = 1125;
+
+		app->player->dead = true;
+
+		if (onetimesoundexplode == false)
+		{
+			app->audio->PlayFx(explosionsound);
+
+			onetimesoundexplode = true;
+		}
+	}
 
 	if (app->player->explosionanim.FinishedAlready)
 	{

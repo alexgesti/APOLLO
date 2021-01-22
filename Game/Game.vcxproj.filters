@@ -18,12 +18,6 @@
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneLose.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneWin.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ModuleController.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -55,9 +49,6 @@
       <Filter>GuiControls</Filter>
     </ClCompile>
     <ClCompile Include="Source\GuiManager.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameplayHUD.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneEarth.cpp">
@@ -99,13 +90,7 @@
     <ClInclude Include="Source\Timer.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneWin.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneLose.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModuleController.h">
@@ -145,9 +130,6 @@
       <Filter>GuiControls</Filter>
     </ClInclude>
     <ClInclude Include="Source\GuiManager.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameplayHUD.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneEarth.h">

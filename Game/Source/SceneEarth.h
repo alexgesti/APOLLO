@@ -43,6 +43,16 @@ public:
 private:
 
 	SDL_Texture* terratext;
+	SDL_Texture* gameovertex;
+
+	fPoint gameoverpos;
+
+	uint gameoversound;
+	uint explosionsound;
+
+	bool gameoveronetimemusic = false;
+	bool onetimesoundexplode = false;
+	bool change = false;
 
 public:
 

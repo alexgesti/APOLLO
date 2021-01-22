@@ -66,8 +66,6 @@ bool Player::Start()
 	water = app->tex->Load("Assets/Screens/Gameplay/waterterraria.png");
 	explosionsheet = app->tex->Load("Assets/Characters/Player/explosion.png");
 
-	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
-
 	currentanim = &moveanim;
 	current2anim = &explosionanim;
 
@@ -92,31 +90,34 @@ bool Player::Update(float dt)
 
 	if (dead == false)
 	{
-		// Movement
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		if (app->modcontrol->blocky == false)
 		{
-			if (acc < 1.5f) acc += 0.01f * dt;
-			else acc = 1.5f;
+			// Movement
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+			{
+				if (acc < 1.5f) acc += 0.01f * dt;
+				else acc = 1.5f;
 
-			currentanim = &moveanim;
-		}
-		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		{
-			if (acc < 1.5f) acc -= 0.01f * dt;
-			else acc = 1.5f;
+				currentanim = &moveanim;
+			}
+			else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+			{
+				if (acc < 1.5f) acc -= 0.01f * dt;
+				else acc = 1.5f;
 
-			currentanim = &moveanim;
-		}
-		else
-		{
-			if (acc < 1.51f && acc >= 0.01f) acc -= 0.005f * dt;
-			else if (acc < 0.01f) acc = 0;
-			app->scenearth->grav += 0.05f;
-			currentanim = &idleanim;
+				currentanim = &moveanim;
+			}
+			else
+			{
+				if (acc < 1.51f && acc >= 0.01f) acc -= 0.005f * dt;
+				else if (acc < 0.01f) acc = 0;
+				app->scenearth->grav += 0.05f;
+				currentanim = &idleanim;
+			}
 		}
 
-		position.y -= vel * cos(angle * M_PI / 180) * acc;
-		position.x += vel * sin(angle * M_PI / 180) * acc;
+			position.y -= vel * cos(angle * M_PI / 180) * acc;
+			position.x += vel * sin(angle * M_PI / 180) * acc;
 
 		// Rotation
 		if (app->modcontrol->blockx == false)
@@ -144,36 +145,8 @@ bool Player::Update(float dt)
 		if (angle >= 360) angle -= 360;
 		else if (angle <= -360) angle += 360;
 
-		// Limits
-		if (position.y <= -145) position.y = app->render->camera.h;
-		else if (position.y >= app->render->camera.h) position.y = -145;
-
 		if (position.x < 0) position.x = 0;
-
-		// Moon aterrizaje
-		if (position.x >= 1125 &&
-			angle <= 275 &&
-			angle >= 265 ||
-			position.x >= 1125 &&
-			angle <= -85 &&
-			angle >= -95)
-		{
-			position.x = 1125;
-			angle = -90;
-		}
-		else if (position.x >= 1125)
-		{
-			position.x = 1125;
-
-			dead = true;
-
-			if (onetimesoundexplode == false)
-			{
-				app->audio->PlayFx(explosionsound);
-
-				onetimesoundexplode = true;
-			}
-		}
+		if (position.x > app->render->camera.w - 65) position.x = app->render->camera.w - 65;
 	}
 
 	currentanim->Update();
@@ -195,7 +168,10 @@ bool Player::PostUpdate()
 	else
 	{
 		SDL_Rect rect2 = current2anim->GetCurrentFrame();
+		if (app->modcontrol->currentscene == 2)
 		app->render->DrawTexture(explosionsheet, position.x - 15, position.y, &rect2, NULL, -90);
+		else if (app->modcontrol->currentscene == 1)
+		app->render->DrawTexture(explosionsheet, position.x - 15, position.y, &rect2, NULL, 0);
 	}
 
 	if (app->modcontrol->blockx == false)

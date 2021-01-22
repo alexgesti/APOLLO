@@ -33,6 +33,7 @@ public:
 
 public:
 	bool blockx = true;
+	bool blocky = false;
 	bool capped = false;
 	bool showcollider = false;
 	bool showbuttons = false;
