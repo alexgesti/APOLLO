@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Player.h"
 #include "Audio.h"
+#include "ModuleController.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -67,6 +68,17 @@ bool Scene::Update(float dt)
 		gameoverpos.x -= 50;
 
 		if (gameoverpos.x <= 0) gameoverpos.x = 0;
+	}
+
+	//Change scene
+	if (app->player->position.x <= 120
+		&& app->player->surviveinmoon)
+	{
+		app->player->angle = 180;
+		app->player->position.x = app->render->camera.w / 2;
+		app->player->position.y = -145;
+
+		app->modcontrol->currentscene = 1;
 	}
 
 	return true;
