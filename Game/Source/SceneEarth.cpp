@@ -112,6 +112,21 @@ bool SceneEarth::Update(float dt)
 			app->player->vel = 1;
 			if(app->player->acc < 7.0f) app->player->acc += 0.05f;
 		}
+
+		//Win
+		if (app->player->win)
+		{
+			if (winonetimemusic == false)
+			{
+				app->audio->PlayFx(winsound);
+
+				winonetimemusic = true;
+			}
+
+			winpos.y -= 50;
+
+			if (winpos.y <= app->render->camera.h) winpos.y = app->render->camera.h;
+		}
 	}
 	else
 	{
@@ -126,7 +141,12 @@ bool SceneEarth::Update(float dt)
 
 		app->player->position.y += grav * dt;
 
-		if(grav >= 1)
+		//Dead
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_UP && app->player->acc > 0)
+		{
+			app->player->ban = true;
+		}
+		if(app->player->position.y >= 444 && app->player->ban == true)
 		{
 			app->player->dead = true;
 
@@ -160,21 +180,6 @@ bool SceneEarth::Update(float dt)
 			app->player->position.y = app->render->camera.h / 2 - 32;
 		
 			app->modcontrol->currentscene = 2;
-		}
-
-		//Win
-		if (app->player->win)
-		{
-			if (winonetimemusic == false)
-			{
-				app->audio->PlayFx(winsound);
-
-				winonetimemusic = true;
-			}
-
-			winpos.y -= 50;
-
-			if (winpos.y <= app->render->camera.h) winpos.y = app->render->camera.h;
 		}
 	}
 

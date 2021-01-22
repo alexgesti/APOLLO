@@ -61,7 +61,7 @@ bool Scene::Update(float dt)
 
 	// Limits
 	if (app->player->position.y <= -145) app->player->position.y = app->render->camera.h;
-	if (app->player->position.y >= app->render->camera.h) app->player->position.y = -145;
+	else if (app->player->position.y >= app->render->camera.h) app->player->position.y = -145;
 
 	// Gravity moon
 	if (app->player->position.x >= 810)

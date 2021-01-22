@@ -92,6 +92,8 @@ bool ModuleController::Update(float dt)
 		app->scenearth->active = false;			// SceneEarth
 		blockx = false;
 		blocky = true;
+		app->player->ban = false;
+		app->player->surviveinmoon = true;
 		app->player->active = true;				// Player
 
 		break;

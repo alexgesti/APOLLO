@@ -50,6 +50,7 @@ public:
 	Animation moveanim;
 	Animation explosionanim;
 
+	bool ban = false;
 	bool dead = false;
 	bool win = false;
 	bool surviveinmoon = false;
