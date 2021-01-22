@@ -1,25 +1,31 @@
-﻿  Scene.cpp
+﻿  SceneEarth.cpp
 C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\Animation.h(58,20): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
 C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\Animation.h(60,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\Animation.h(67,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
 C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\Player.h(8,1): warning C4005: 'M_PI': redefinición de macro
 C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\External\SDL\include\SDL_stdinc.h(436): message : vea la definición anterior de 'M_PI'
-C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\Scene.cpp(43,37): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\SceneEarth.cpp(42,35): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
           with
           [
               TYPE=float
           ]
-C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\Scene.cpp(63,84): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\SceneEarth.cpp(43,37): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
           with
           [
               TYPE=float
           ]
-C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\Scene.cpp(116,51): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\SceneEarth.cpp(63,119): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\SceneEarth.cpp(100,75): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
           with
           [
               TYPE=float
           ]
-C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\Scene.cpp(143,52): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\SceneEarth.cpp(199,56): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\raulc\Documents\GitHub\APOLLO\Game\Source\SceneEarth.cpp(220,52): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
           with
           [
               TYPE=float

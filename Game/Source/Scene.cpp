@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "SceneEarth.h"
 #include "Player.h"
 #include "Audio.h"
 #include "ModuleController.h"
@@ -109,10 +110,11 @@ bool Scene::Update(float dt)
 	}
 
 	//Change scene
-	if (app->player->position.x <= 120
-		&& app->player->surviveinmoon)
+	if (app->player->position.x <= 120)
 	{
 		app->player->angle = 180;
+		app->modcontrol->blocky = true;
+		app->scenearth->grav = 0;
 		app->player->position.x = app->render->camera.w / 2;
 		app->player->position.y = -145;
 

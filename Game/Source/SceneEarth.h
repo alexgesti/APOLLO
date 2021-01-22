@@ -54,7 +54,6 @@ private:
 	bool winonetimemusic = false;
 	bool gameoveronetimemusic = false;
 	bool onetimesoundexplode = false;
-	bool change = false;
 
 public:
 

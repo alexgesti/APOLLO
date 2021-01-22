@@ -65,20 +65,54 @@ bool SceneEarth::Update(float dt)
 	if (app->modcontrol->blockx == false)
 	{
 		//Buoyancy
-		if (app->player->position.y > 447)
+		if (app->player->position.y > 460)
 		{
 			if (app->player->position.x < 385 || app->player->position.x > 910)
 			{				
-				if (app->player->acc > 0 && change == false)
+				if (app->player->acc >= 0)
 				{
-					app->player->acc -= 0.1f;
-					grav += 0.25f;
+					app->player->acc -= 0.15f;
 				}
 				if (app->player->acc <= 0)
 				{
-					change = true;
+					app->player->acc = 0;
+					grav += 0.05f;
 					app->player->position.y -= grav * dt;
-					grav -= 0.15f;
+				}
+				if (app->player->position.y > 450 && app->player->position.y < 535 && grav > 0)
+				{
+					grav -= 0.1f;
+					if (grav >= -0.5f && grav <= 0.5f) app->player->win = true;
+				}
+
+				//Win
+				if (app->player->win && app->player->surviveinmoon == true)
+				{
+					if (winonetimemusic == false)
+					{
+						app->audio->PlayFx(winsound);
+
+						winonetimemusic = true;
+					}
+
+					winpos.y -= 50;
+
+					if (winpos.y <= app->render->camera.h) winpos.y = app->render->camera.h;
+				}
+				else if (app->player->win && app->player->surviveinmoon == false) 
+				{
+					app->player->dead = true;
+
+					if (gameoveronetimemusic == false)
+					{
+						app->audio->PlayFx(gameoversound);
+
+						gameoveronetimemusic = true;
+					}
+
+					gameoverpos.x -= 50;
+
+					if (gameoverpos.x <= 0) gameoverpos.x = 0;
 				}
 			}
 			else
@@ -112,21 +146,6 @@ bool SceneEarth::Update(float dt)
 			app->player->vel = 1;
 			if(app->player->acc < 7.0f) app->player->acc += 0.05f;
 		}
-
-		//Win
-		if (app->player->win)
-		{
-			if (winonetimemusic == false)
-			{
-				app->audio->PlayFx(winsound);
-
-				winonetimemusic = true;
-			}
-
-			winpos.y -= 50;
-
-			if (winpos.y <= app->render->camera.h) winpos.y = app->render->camera.h;
-		}
 	}
 	else
 	{
@@ -142,7 +161,7 @@ bool SceneEarth::Update(float dt)
 		app->player->position.y += grav * dt;
 
 		//Dead
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_UP && app->player->acc > 0)
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_UP && app->player->acc > 1)
 		{
 			app->player->ban = true;
 		}
@@ -173,7 +192,7 @@ bool SceneEarth::Update(float dt)
 		}
 		
 		//Change scene
-		if (app->player->position.y <= -145 && app->player->surviveinmoon == false)
+		if (app->player->position.y <= -145)
 		{
 			app->player->angle = 90;
 			app->player->position.x = 120;

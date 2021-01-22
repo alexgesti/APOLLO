@@ -91,27 +91,30 @@ bool Player::Update(float dt)
 
 	if (dead == false)
 	{
-		// Movement
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && ban == false)
+		if (app->modcontrol->blocky == false)
 		{
-			if (acc < 1.5f) acc += 0.01f * dt;
-			else acc = 1.5f;
+			// Movement
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && ban == false)
+			{
+				if (acc < 1.5f) acc += 0.01f * dt;
+				else acc = 1.5f;
 
-			currentanim = &moveanim;
-		}
-		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		{
-			if (acc < 1.5f) acc -= 0.01f * dt;
-			else acc = 1.5f;
+				currentanim = &moveanim;
+			}
+			else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+			{
+				if (acc < 1.5f) acc -= 0.01f * dt;
+				else acc = 1.5f;
 
-			currentanim = &moveanim;
-		}
-		else
-		{
-			if (acc < 1.51f && acc >= 0.01f) acc -= 0.005f * dt;
-			else if (acc < 0.01f) acc = 0;
-			app->scenearth->grav += 0.05f;
-			currentanim = &idleanim;
+				currentanim = &moveanim;
+			}
+			else
+			{
+				if (acc < 1.51f && acc >= 0.01f) acc -= 0.005f * dt;
+				else if (acc < 0.01f) acc = 0;
+				app->scenearth->grav += 0.05f;
+				currentanim = &idleanim;
+			}
 		}
 
 		position.y -= vel * cos(angle * M_PI / 180) * acc;
