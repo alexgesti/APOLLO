@@ -13,16 +13,6 @@
 Scene::Scene() : Module()
 {
 	name.Create("scene");
-
-
-
-	//pillar animation
-	/*pillar.PushBack({ 0, 0, 48, 80 });
-	pillar.PushBack({ 48, 0, 48, 80 });
-	pillar.PushBack({ 96, 0, 48, 80 });
-	pillar.loop = true;
-	pillar.speed = 0.12f^*/
-
 }
 
 // Destructor
@@ -41,8 +31,6 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	//spritePillar = app->tex->Load("Assets/Screens/Gameplay/save_point_saving-x64.png");
-
 	backtext = app->tex->Load("Assets/Screens/Gameplay/background.png");
 	earthtex = app->tex->Load("Assets/Screens/Gameplay/earth.png");
 	moontex = app->tex->Load("Assets/Screens/Gameplay/landplace.png");
@@ -63,15 +51,9 @@ bool Scene::Update(float dt)
 {
 	if (notsceneactived)
 	{
-		//app->render->camera.x = app->player->position.x + ((app->render->camera.w / 2) - app->player->playerWH / 2);		 
-		//app->render->camera.y = app->player->position.y + ((app->render->camera.h / 2) - app->player->playerWH / 2);
-
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
 	}
-
-	//PillarAnim->Update();
-
 
 	return true;
 }
@@ -81,8 +63,6 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	//SDL_Rect rect = PillarAnim->GetCurrentFrame();
-	//app->render->DrawTexture(spritePillar, 2057, 1905, &rect);
 	SDL_Rect backrect = { 0, 0, app->render->camera.w, app->render->camera.h };
 	app->render->DrawTexture(backtext, 0, 0, &backrect);
 

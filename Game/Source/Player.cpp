@@ -7,7 +7,6 @@
 #include "Scene.h"
 #include "Audio.h"
 #include "ModuleController.h"
-#include "ScenePause.h"
 
 #include <math.h>
 #include "Defs.h"
@@ -107,20 +106,20 @@ bool Player::Update(float dt)
 	}
 	
 	//gravity
-	if (position.x >= 1165)
+	/*if (position.x >= 1165)
 	{
 		//position.y = -1165;
 	}
 	else if (position.x >= 810)
 	{
 		position.x += 1.0f;
-	}
+	}*/
 
 	angle += angle_rotation_value;
 
 	// Limits
-	if (position.y <= -145) position.y = app->render->camera.h;
-	else if (position.y >= app->render->camera.h) position.y = -145;
+	/*if (position.y <= -145) position.y = app->render->camera.h;
+	else if (position.y >= app->render->camera.h) position.y = -145;*/
 
 	if (position.x < 0) position.x = 0;
 

@@ -5,12 +5,9 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Scene.h"
-#include "SceneIntro.h"
-#include "SceneLogo.h"
+#include "SceneEarth.h"
 #include "SceneLose.h"
 #include "SceneWin.h"
-#include "SceneOptions.h"
-#include "ScenePause.h"
 #include "Player.h"
 #include "GameplayHUD.h"
 #include "ModuleController.h"
@@ -54,18 +51,15 @@ bool ModuleController::Awake(pugi::xml_node& config)
 	app->tex->active = true;			// Texture
 	app->audio->active = true;			// Audio
 	app->scene->active = true;			// Scene
-	//app->sceneintro->active = true;		// SceneIntro
-	//app->scenelogo->active = true;		// SceneLogo
+	app->scenearth->active = true;			// Scene
 	//app->scenelose->active = true;		// SceneLose
 	//app->scenewin->active = true;		// SceneWin
-	//app->scenepause->active = false;	// Pause
-	//app->sceneopts->active = false;		// Settings
 	app->player->active = true;			// Player
 	app->modcontrol->active = true;		// ModControl
 	//app->gamehud->active = true;		// GameplayHUD
 	app->render->active = true;			// Render
 
-	currentscene = 2;					// Current Scene
+	currentscene = 1;					// Current Scene
 	
 	//app->SaveGameRequest("StartValues.xml");
 
@@ -227,29 +221,24 @@ bool ModuleController::Update(float dt)
 	//
 	//	break;
 	//
-	//case 1:	//Intro
-	//
-	//	app->map->active = false;				// Map
-	//	app->scene->active = false;				// Scene
-	//	app->scene->notsceneactived = false;	// SceneCamera
-	//	app->player->active = false;			// Player
-	//	app->wenemy->active = false;			// Walking Enemy
-	//	app->fenemy->active = false;			// Flying Enemy
-	//	app->sceneintro->active = true;			// SceneIntro
-	//	app->scenelogo->active = false;			// SceneLogo
-	//	app->scenelose->active = false;			// SceneLose
-	//	app->scenewin->active = false;			// SceneWin
-	//	app->gamehud->active = false;			// GameplayHUD
-	//
-	//	break;
+	case 1:	//Earth
+	
+		app->scene->active = false;				// Scene
+		app->scenearth->active = true;			// SceneEarth
+		app->scene->notsceneactived = true;	// SceneCamera
+		app->player->active = true;			// Player
+		//app->scenelose->active = false;			// SceneLose
+		//app->scenewin->active = false;			// SceneWin
+		//app->gamehud->active = false;			// GameplayHUD
+	
+		break;
 
 	case 2:	//Gameplay
 		
 		app->scene->active = true;				// Scene
+		app->scenearth->active = false;			// SceneEarth
 		app->scene->notsceneactived = true;		// SceneCamera
 		app->player->active = true;				// Player
-		//app->sceneintro->active = false;		// SceneIntro
-		//app->scenelogo->active = false;			// SceneLogo
 		//app->scenelose->active = false;			// SceneLose
 		//app->scenewin->active = false;			// SceneWin
 		//app->gamehud->active = true;			// GameplayHUD

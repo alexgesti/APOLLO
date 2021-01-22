@@ -5,12 +5,9 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Scene.h"
-#include "SceneIntro.h"
-#include "SceneLogo.h"
+#include "SceneEarth.h"
 #include "SceneLose.h"
 #include "SceneWin.h"
-#include "SceneOptions.h"
-#include "ScenePause.h"
 #include "Player.h"
 #include "ModuleController.h"
 #include "GameplayHUD.h"
@@ -34,12 +31,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	audio = new Audio();
 	scene = new Scene();
-	//sceneintro = new SceneIntro();
-	//scenelogo = new SceneLogo();
+	scenearth = new SceneEarth();
 	//scenelose = new SceneLose();
 	//scenewin = new SceneWin();
-	//sceneopts = new SceneOptions();
-	//scenepause = new ScenePause();
 	player = new Player();
 	modcontrol = new ModuleController();
 	//gamehud = new GameplayHUD();
@@ -50,15 +44,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(scenearth);
 	AddModule(scene);
-	//AddModule(sceneintro);
-	//AddModule(scenelogo);
 	//AddModule(scenelose);
 	//AddModule(scenewin);
 	AddModule(player);
 	AddModule(modcontrol);
-	//AddModule(scenepause);
-	//AddModule(sceneopts);
 	//AddModule(gamehud);
 
 	// Render last to swap buffer
