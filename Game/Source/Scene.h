@@ -50,12 +50,9 @@ private:
 	SDL_Texture* earthtex;
 	SDL_Texture* moontex;
 
-	int camX;
-	int camY;
-
 public:
 
-	bool notsceneactived;
+
 
 };
 

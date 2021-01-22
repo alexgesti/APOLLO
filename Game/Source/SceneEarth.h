@@ -44,12 +44,9 @@ private:
 
 	SDL_Texture* terratext;
 
-	int camX;
-	int camY;
-
 public:
 
-	bool notsceneactived;
+	float grav;
 
 };
 

@@ -43,7 +43,7 @@ public:
 
 public:
 	fPoint position;	// Position
-	int vel;			// Velocity/Speed
+	float vel;			// Velocity/Speed
 	float acc;			// Acceleration
 	float angle;		// Angle
 	float angle_rotation_value;

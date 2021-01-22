@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "Player.h"
 #include "Scene.h"
+#include "SceneEarth.h"
 #include "Audio.h"
 #include "ModuleController.h"
 
@@ -50,7 +51,7 @@ bool Player::Start()
 	currentanim = &moveanim;
 
 	position.x = app->render->camera.w / 2;
-	position.y = app->render->camera.h / 2;
+	position.y = 444;
 	vel = 5;
 	angle = 0;
 
@@ -76,11 +77,18 @@ bool Player::Update(float dt)
 
 		currentanim = &moveanim;
 	}
+	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		if (acc < 1.5f) acc -= 0.01f * dt;
+		else acc = 1.5f;
+
+		currentanim = &moveanim;
+	}
 	else
 	{
 		if (acc < 1.51f && acc >= 0.01f) acc -= 0.005f * dt;
 		else if (acc < 0.01f) acc = 0;
-
+		app->scenearth->grav += 0.05f;
 		currentanim = &idleanim;
 	}
 
@@ -88,39 +96,30 @@ bool Player::Update(float dt)
 	position.x += vel * sin(angle * M_PI / 180) * acc;
 
 	// Rotation
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (app->modcontrol->blockx == false)
 	{
-		if (angle_rotation_value > -2) angle_rotation_value -= 0.1f;
-		else angle_rotation_value = -2;
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			if (angle_rotation_value > -2) angle_rotation_value -= 0.1f;
+			else angle_rotation_value = -2;
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			if (angle_rotation_value < 2) angle_rotation_value += 0.1f;
+			else angle_rotation_value = 2;
+		}
+		else
+		{
+			if (angle_rotation_value < 2.1f && angle_rotation_value >= 0.2f) angle_rotation_value -= 0.1f * dt;
+			else if (angle_rotation_value > -2.1f && angle_rotation_value <= -0.2f) angle_rotation_value += 0.1f * dt;
+			else if (angle_rotation_value < 0.19f && angle_rotation_value > -0.19f) angle_rotation_value = 0;
+		}
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		if (angle_rotation_value < 2) angle_rotation_value += 0.1f;
-		else angle_rotation_value = 2;
-	}
-	else
-	{
-		if (angle_rotation_value < 2.1f && angle_rotation_value >= 0.2f) angle_rotation_value -= 0.1f * dt;
-		else if (angle_rotation_value > -2.1f && angle_rotation_value <= -0.2f) angle_rotation_value += 0.1f * dt;
-		else if (angle_rotation_value < 0.19f && angle_rotation_value > -0.19f) angle_rotation_value = 0;
-	}
-	
-	//gravity
-	/*if (position.x >= 1165)
-	{
-		//position.y = -1165;
-	}
-	else if (position.x >= 810)
-	{
-		position.x += 1.0f;
-	}*/
 
 	angle += angle_rotation_value;
 
 	// Limits
-	/*if (position.y <= -145) position.y = app->render->camera.h;
-	else if (position.y >= app->render->camera.h) position.y = -145;*/
-
+	if (position.y <= -(145 + 65)) position.y = app->render->camera.h;
 	if (position.x < 0) position.x = 0;
 
 	currentanim->Update();

@@ -33,6 +33,8 @@ bool SceneEarth::Start()
 {
 	terratext = app->tex->Load("Assets/Screens/Gameplay/terrariacaptura.png");
 
+	grav = 0;
+
 	return true;
 }
 
@@ -45,8 +47,29 @@ bool SceneEarth::PreUpdate()
 // Called each loop iteration
 bool SceneEarth::Update(float dt)
 { 
+	//Camera
 	app->render->camera.x = 0;
-	app->render->camera.y = -app->player->position.y;
+	if(app->player->position.y >= 0) app->render->camera.y = -app->player->position.y * 1.5;
+
+	//Gravity
+	if (app->player->acc >= 1.4f && app->player->vel < 3.0f) app->player->vel += 0.05f;
+	if (app->player->acc < 1.4f && app->player->vel > 1.0f)	app->player->vel -= 0.1f;
+
+	if (app->player->position.y >= 444)
+	{
+		grav = 0.0f;
+	}
+
+	app->player->position.y += grav;
+
+	//Buoyancy
+	//if (app->player->position.y > 447 && app->player->position.x < 385) LOG("izquierda");
+	//if (app->player->position.y > 447 && app->player->position.x > 920) LOG("derecha");
+
+	//Collision
+	//if (app->player->position.y > 447 && (app->player->position.x > 370 || app->player->position.y < 920));
+
+	LOG("%f %f %f %f %f", app->player->position.x, app->player->position.y, app->player->vel, app->player->acc, grav);
 
 	return true;
 }

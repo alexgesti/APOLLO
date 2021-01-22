@@ -32,6 +32,7 @@ public:
 	bool CleanUp();
 
 public:
+	bool blockx = true;
 	bool capped = false;
 	bool showcollider = false;
 	bool showbuttons = false;

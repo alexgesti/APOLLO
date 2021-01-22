@@ -35,8 +35,6 @@ bool Scene::Start()
 	earthtex = app->tex->Load("Assets/Screens/Gameplay/earth.png");
 	moontex = app->tex->Load("Assets/Screens/Gameplay/landplace.png");
 
-	notsceneactived = false;
-
 	return true;
 }
 
@@ -49,11 +47,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	if (notsceneactived)
-	{
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
-	}
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
 
 	return true;
 }
@@ -72,8 +67,6 @@ bool Scene::PostUpdate()
 	}
 
 	app->render->DrawTexture(earthtex, -108, app->render->camera.h - 216 * 2, NULL);
-
-	
 
 	return ret;
 }

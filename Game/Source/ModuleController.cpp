@@ -222,10 +222,9 @@ bool ModuleController::Update(float dt)
 	//	break;
 	//
 	case 1:	//Earth
-	
+		
 		app->scene->active = false;				// Scene
 		app->scenearth->active = true;			// SceneEarth
-		app->scene->notsceneactived = true;	// SceneCamera
 		app->player->active = true;			// Player
 		//app->scenelose->active = false;			// SceneLose
 		//app->scenewin->active = false;			// SceneWin
@@ -237,7 +236,7 @@ bool ModuleController::Update(float dt)
 		
 		app->scene->active = true;				// Scene
 		app->scenearth->active = false;			// SceneEarth
-		app->scene->notsceneactived = true;		// SceneCamera
+		blockx = false;
 		app->player->active = true;				// Player
 		//app->scenelose->active = false;			// SceneLose
 		//app->scenewin->active = false;			// SceneWin
