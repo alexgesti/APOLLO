@@ -49,7 +49,9 @@ private:
 
 	uint gameoversound;
 	uint explosionsound;
+	uint winsound;
 
+	bool winonetimemusic = false;
 	bool gameoveronetimemusic = false;
 	bool onetimesoundexplode = false;
 	bool change = false;
@@ -57,7 +59,7 @@ private:
 public:
 
 	float grav;
-
+	fPoint winpos;
 };
 
 #endif // __SCENEEARTH_H__

@@ -37,7 +37,9 @@ bool SceneEarth::Start()
 	gameovertex = app->tex->Load("Assets/Screens/Gameplay/gameover.png");
 	gameoversound = app->audio->LoadFx("Assets/Audio/Music/gameover.ogg");
 	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
+	winsound = app->audio->LoadFx("Assets/Audio/Music/win.ogg");
 
+	winpos.y = app->render->camera.h * 2;
 	gameoverpos.x = app->render->camera.w;
 
 	grav = 0;
@@ -148,6 +150,31 @@ bool SceneEarth::Update(float dt)
 			gameoverpos.x -= 50;
 
 			if (gameoverpos.x <= 0) gameoverpos.x = 0;
+		}
+		
+		//Change scene
+		if (app->player->position.y <= -145 && app->player->surviveinmoon == false)
+		{
+			app->player->angle = 90;
+			app->player->position.x = 120;
+			app->player->position.y = app->render->camera.h / 2 - 32;
+		
+			app->modcontrol->currentscene = 2;
+		}
+
+		//Win
+		if (app->player->win)
+		{
+			if (winonetimemusic == false)
+			{
+				app->audio->PlayFx(winsound);
+
+				winonetimemusic = true;
+			}
+
+			winpos.y -= 50;
+
+			if (winpos.y <= app->render->camera.h) winpos.y = app->render->camera.h;
 		}
 	}
 

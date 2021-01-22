@@ -65,6 +65,7 @@ bool Player::Start()
 	spritesheet = app->tex->Load("Assets/Characters/Player/player.png");
 	water = app->tex->Load("Assets/Screens/Gameplay/waterterraria.png");
 	explosionsheet = app->tex->Load("Assets/Characters/Player/explosion.png");
+	wintex = app->tex->Load("Assets/Screens/Gameplay/GETHARD_win.png");
 
 	currentanim = &moveanim;
 	current2anim = &explosionanim;
@@ -147,6 +148,10 @@ bool Player::Update(float dt)
 
 		if (position.x < 0) position.x = 0;
 		if (position.x > app->render->camera.w - 65) position.x = app->render->camera.w - 65;
+		if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+		{
+			win = true;
+		}
 	}
 
 	currentanim->Update();
@@ -177,6 +182,12 @@ bool Player::PostUpdate()
 	if (app->modcontrol->blockx == false)
 	{
 		app->render->DrawTexture(water, 0, app->render->camera.y);
+	}
+
+	if (win)
+	{
+		SDL_Rect winrect = { 0, 0, app->render->camera.w, app->render->camera.h };
+		app->render->DrawTexture(wintex, 0, app->scenearth->winpos.y, &winrect);
 	}
 
 	return ret;
