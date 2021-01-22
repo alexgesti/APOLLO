@@ -34,6 +34,11 @@ bool Scene::Start()
 	backtext = app->tex->Load("Assets/Screens/Gameplay/background.png");
 	earthtex = app->tex->Load("Assets/Screens/Gameplay/earth.png");
 	moontex = app->tex->Load("Assets/Screens/Gameplay/landplace.png");
+	gameovertex = app->tex->Load("Assets/Screens/Gameplay/gameover.png");
+
+	gameoversound = app->audio->LoadFx("Assets/Audio/Music/gameover.ogg");
+
+	gameoverpos.x = app->render->camera.w;
 
 	return true;
 }
@@ -49,6 +54,20 @@ bool Scene::Update(float dt)
 {
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
+
+	if (app->player->explosionanim.FinishedAlready)
+	{
+		if (gameoveronetimemusic == false)
+		{
+			app->audio->PlayFx(gameoversound);
+
+			gameoveronetimemusic = true;
+		}
+
+		gameoverpos.x -= 50;
+
+		if (gameoverpos.x <= 0) gameoverpos.x = 0;
+	}
 
 	return true;
 }
@@ -68,39 +87,13 @@ bool Scene::PostUpdate()
 
 	app->render->DrawTexture(earthtex, -108, app->render->camera.h - 216 * 2, NULL);
 
+	if (app->player->explosionanim.FinishedAlready)
+	{
+		SDL_Rect gameoverrect = { 0, 0, app->render->camera.w, app->render->camera.h };
+		app->render->DrawTexture(gameovertex, gameoverpos.x, 0, &gameoverrect);
+	}
+
 	return ret;
-}
-
-// Load Scene State (Underconstruction)
-bool Scene::LoadState(pugi::xml_node& data)
-{
-	// Player
-	//app->player->position.x = data.child("Player").attribute("x").as_int();
-	//app->player->position.y = data.child("Player").attribute("y").as_int();
-
-	// Scene
-
-
-	return true;
-}
-
-// Save Scene State (Underconstruction)
-bool Scene::SaveState(pugi::xml_node& data) const
-{
-	pugi::xml_node playersave = data.append_child("Player");
-	pugi::xml_node scenesave = data.append_child("Scene");
-
-	//playersave.append_attribute("x") = app->player->position.x;
-	//playersave.append_attribute("y") = app->player->position.y;
-
-	return true;
-}
-
-bool Scene::Reset()
-{
-	app->LoadGameRequest("StartValues.xml");
-
-	return true;
 }
 
 // Called before quitting

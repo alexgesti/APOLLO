@@ -26,6 +26,22 @@ Player::Player() : Module()
 	moveanim.PushBack({ 128, 0, 64, 140 });
 	moveanim.loop = true;
 	moveanim.speed = 0.25f;
+
+	//explosion
+	explosionanim.PushBack({ 0, 0, 144, 144 });		// 1
+	explosionanim.PushBack({ 144, 0, 144, 144 });	// 2
+	explosionanim.PushBack({ 288, 0, 144, 144 });	// 3
+	explosionanim.PushBack({ 432, 0, 144, 144 });	// 4
+	explosionanim.PushBack({ 576, 0, 144, 144 });	// 5
+	explosionanim.PushBack({ 720, 0, 144, 144 });	// 6
+	explosionanim.PushBack({ 864, 0, 144, 144 });	// 7
+	explosionanim.PushBack({ 1008, 0, 144, 144 });	// 8
+	explosionanim.PushBack({ 1152, 0, 144, 144 });	// 9
+	explosionanim.PushBack({ 1296, 0, 144, 144 });	// 10
+	explosionanim.PushBack({ 1440, 0, 144, 144 });	// 11
+	explosionanim.PushBack({ 0, 0, 0, 0 });			// 12
+	explosionanim.loop = false;
+	explosionanim.speed = 0.2f;
 }
 
 // Destructor
@@ -47,8 +63,13 @@ bool Player::Awake()
 bool Player::Start()
 {
 	spritesheet = app->tex->Load("Assets/Characters/Player/player.png");
+	water = app->tex->Load("Assets/Screens/Gameplay/waterterraria.png");
+	explosionsheet = app->tex->Load("Assets/Characters/Player/explosion.png");
+
+	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
 
 	currentanim = &moveanim;
+	current2anim = &explosionanim;
 
 	position.x = app->render->camera.w / 2;
 	position.y = 444;
@@ -69,60 +90,94 @@ bool Player::Update(float dt)
 {
 	dt *= 100;
 
-	// Movement
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (dead == false)
 	{
-		if (acc < 1.5f) acc += 0.01f * dt;
-		else acc = 1.5f;
-
-		currentanim = &moveanim;
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		if (acc < 1.5f) acc -= 0.01f * dt;
-		else acc = 1.5f;
-
-		currentanim = &moveanim;
-	}
-	else
-	{
-		if (acc < 1.51f && acc >= 0.01f) acc -= 0.005f * dt;
-		else if (acc < 0.01f) acc = 0;
-		app->scenearth->grav += 0.05f;
-		currentanim = &idleanim;
-	}
-
-	position.y -= vel * cos(angle * M_PI / 180) * acc;
-	position.x += vel * sin(angle * M_PI / 180) * acc;
-
-	// Rotation
-	if (app->modcontrol->blockx == false)
-	{
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		// Movement
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
-			if (angle_rotation_value > -2) angle_rotation_value -= 0.1f;
-			else angle_rotation_value = -2;
+			if (acc < 1.5f) acc += 0.01f * dt;
+			else acc = 1.5f;
+
+			currentanim = &moveanim;
 		}
-		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		{
-			if (angle_rotation_value < 2) angle_rotation_value += 0.1f;
-			else angle_rotation_value = 2;
+			if (acc < 1.5f) acc -= 0.01f * dt;
+			else acc = 1.5f;
+
+			currentanim = &moveanim;
 		}
 		else
 		{
-			if (angle_rotation_value < 2.1f && angle_rotation_value >= 0.2f) angle_rotation_value -= 0.1f * dt;
-			else if (angle_rotation_value > -2.1f && angle_rotation_value <= -0.2f) angle_rotation_value += 0.1f * dt;
-			else if (angle_rotation_value < 0.19f && angle_rotation_value > -0.19f) angle_rotation_value = 0;
+			if (acc < 1.51f && acc >= 0.01f) acc -= 0.005f * dt;
+			else if (acc < 0.01f) acc = 0;
+			app->scenearth->grav += 0.05f;
+			currentanim = &idleanim;
+		}
+
+		position.y -= vel * cos(angle * M_PI / 180) * acc;
+		position.x += vel * sin(angle * M_PI / 180) * acc;
+
+		// Rotation
+		if (app->modcontrol->blockx == false)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			{
+				if (angle_rotation_value > -2) angle_rotation_value -= 0.1f;
+				else angle_rotation_value = -2;
+			}
+			else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			{
+				if (angle_rotation_value < 2) angle_rotation_value += 0.1f;
+				else angle_rotation_value = 2;
+			}
+			else
+			{
+				if (angle_rotation_value < 2.1f && angle_rotation_value >= 0.2f) angle_rotation_value -= 0.1f * dt;
+				else if (angle_rotation_value > -2.1f && angle_rotation_value <= -0.2f) angle_rotation_value += 0.1f * dt;
+				else if (angle_rotation_value < 0.19f && angle_rotation_value > -0.19f) angle_rotation_value = 0;
+			}
+		}
+
+		angle += angle_rotation_value;
+
+		if (angle >= 360) angle -= 360;
+		else if (angle <= -360) angle += 360;
+
+		// Limits
+		if (position.y <= -145) position.y = app->render->camera.h;
+		else if (position.y >= app->render->camera.h) position.y = -145;
+
+		if (position.x < 0) position.x = 0;
+
+		// Moon aterrizaje
+		if (position.x >= 1125 &&
+			angle <= 275 &&
+			angle >= 265 ||
+			position.x >= 1125 &&
+			angle <= -85 &&
+			angle >= -95)
+		{
+			position.x = 1125;
+			angle = -90;
+		}
+		else if (position.x >= 1125)
+		{
+			position.x = 1125;
+
+			dead = true;
+
+			if (onetimesoundexplode == false)
+			{
+				app->audio->PlayFx(explosionsound);
+
+				onetimesoundexplode = true;
+			}
 		}
 	}
 
-	angle += angle_rotation_value;
-
-	// Limits
-	if (position.y <= -(145 + 65)) position.y = app->render->camera.h;
-	if (position.x < 0) position.x = 0;
-
 	currentanim->Update();
+	if (dead) current2anim->Update();
 
 	return true;
 }
@@ -132,8 +187,21 @@ bool Player::PostUpdate()
 {
 	bool ret = true;
 
-	SDL_Rect rect = currentanim->GetCurrentFrame();
-	app->render->DrawTexture(spritesheet, position.x, position.y, &rect, NULL, angle);
+	if (dead == false)
+	{
+		SDL_Rect rect = currentanim->GetCurrentFrame();
+		app->render->DrawTexture(spritesheet, position.x, position.y, &rect, NULL, angle);
+	}
+	else
+	{
+		SDL_Rect rect2 = current2anim->GetCurrentFrame();
+		app->render->DrawTexture(explosionsheet, position.x - 15, position.y, &rect2, NULL, -90);
+	}
+
+	if (app->modcontrol->blockx == false)
+	{
+		app->render->DrawTexture(water, 0, app->render->camera.y);
+	}
 
 	return ret;
 }
@@ -144,54 +212,4 @@ bool Player::CleanUp()
 	LOG("Freeing player");
 
 	return true;
-}
-
-int Player::CollisionPlayer()
-{
-	/*iPoint posMapPlayer[numnpoints];
-
-	for (int i = 0; i < numnpoints; i++)
-	{
-		posMapPlayer[i] = app->map->WorldToMap(-position.x + (int)pointscollision[i][0], -position.y + (int)pointscollision[i][1]);
-		if (CheckCollision(posMapPlayer[i]) == 2) life = 0;
-		if (CheckCollision(posMapPlayer[i]) == 3) return 1; // Checkpoint 1
-		if (CheckCollision(posMapPlayer[i]) == 5) return 4; // Checkpoint 2
-		if (CheckCollision(posMapPlayer[i]) == 6) return 5; // Checkpoint 3
-		if (CheckCollision(posMapPlayer[i]) == 4)
-		{
-			app->fade->canfade = true;
-			app->fade->startinblack = false;
-			app->fade->hewin = true;
-		}
-	}
-
-	if (CheckCollision(posMapPlayer[numnpoints - 1]) == 1) return 2;
-	if (CheckCollision(posMapPlayer[numnpoints - 2]) == 1) return 3;*/
-
-	return false;
-}
-
-bool Player::CollisionFloorPlayer()
-{
-	/*iPoint posFloorPlayer[numnpoints];
-
-	for (int i = 0; i < numnpoints; i++)
-	{
-		posFloorPlayer[i] = app->map->WorldToMap(-position.x + (int)pointsfloorcollision[i][0], -position.y + (int)pointsfloorcollision[i][1]);
-		if (CheckCollision(posFloorPlayer[i]) == 1) return true;
-	}*/
-
-	return false;
-}
-
-int Player::CheckCollision(iPoint positionMapPlayer)
-{
-	//if (app->map->data.layers.At(1)->data->Get(positionMapPlayer.x, positionMapPlayer.y) != 0) return 1;
-	//if (app->map->data.layers.At(2)->data->Get(positionMapPlayer.x, positionMapPlayer.y) != 0) return 4;
-	//if (app->map->data.layers.At(3)->data->Get(positionMapPlayer.x, positionMapPlayer.y) != 0) return 2;
-	//if (app->map->data.layers.At(4)->data->Get(positionMapPlayer.x, positionMapPlayer.y) != 0) return 3; // CheckPoint 1
-	//if (app->map->data.layers.At(5)->data->Get(positionMapPlayer.x, positionMapPlayer.y) != 0) return 5; // CheckPoint 2
-	//if (app->map->data.layers.At(6)->data->Get(positionMapPlayer.x, positionMapPlayer.y) != 0) return 6; // CheckPoint 3
-
-	return false;
 }

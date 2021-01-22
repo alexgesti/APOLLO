@@ -59,7 +59,7 @@ bool ModuleController::Awake(pugi::xml_node& config)
 	//app->gamehud->active = true;		// GameplayHUD
 	app->render->active = true;			// Render
 
-	currentscene = 1;					// Current Scene
+	currentscene = 2;					// Current Scene
 	
 	//app->SaveGameRequest("StartValues.xml");
 
@@ -225,6 +225,7 @@ bool ModuleController::Update(float dt)
 		
 		app->scene->active = false;				// Scene
 		app->scenearth->active = true;			// SceneEarth
+		blockx = false;
 		app->player->active = true;			// Player
 		//app->scenelose->active = false;			// SceneLose
 		//app->scenewin->active = false;			// SceneWin

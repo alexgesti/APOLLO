@@ -6,6 +6,7 @@
 #include "SceneEarth.h"
 #include "Player.h"
 #include "Audio.h"
+#include "ModuleController.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -51,23 +52,35 @@ bool SceneEarth::Update(float dt)
 	app->render->camera.x = 0;
 	if(app->player->position.y >= 0) app->render->camera.y = -app->player->position.y * 1.5;
 
-	//Gravity
-	if (app->player->acc >= 1.4f && app->player->vel < 3.0f) app->player->vel += 0.05f;
-	if (app->player->acc < 1.4f && app->player->vel > 1.0f)	app->player->vel -= 0.1f;
-
-	if (app->player->position.y >= 444)
+	if (app->modcontrol->blockx == false)
 	{
-		grav = 0.0f;
+		//Buoyancy
+		if (app->player->position.y > 447)
+		{
+
+			if (app->player->position.x < 385 || app->player->position.x > 910)
+			{
+
+			}
+			else
+			{
+
+			}
+		}
 	}
+	else
+	{
+		//Gravity
+		if (app->player->acc >= 1.4f && app->player->vel < 3.0f) app->player->vel += 0.05f;
+		if (app->player->acc < 1.4f && app->player->vel > 1.0f)	app->player->vel -= 0.1f;
 
-	app->player->position.y += grav;
+		if (app->player->position.y >= 444)
+		{
+			grav = 0.0f;
+		}
 
-	//Buoyancy
-	//if (app->player->position.y > 447 && app->player->position.x < 385) LOG("izquierda");
-	//if (app->player->position.y > 447 && app->player->position.x > 920) LOG("derecha");
-
-	//Collision
-	//if (app->player->position.y > 447 && (app->player->position.x > 370 || app->player->position.y < 920));
+		app->player->position.y += grav;
+	}
 
 	LOG("%f %f %f %f %f", app->player->position.x, app->player->position.y, app->player->vel, app->player->acc, grav);
 

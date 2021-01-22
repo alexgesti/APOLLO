@@ -31,16 +31,6 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
-	// Load / Save (Underconstruction)
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;
-
-	// CollisionOrb
-	bool CheckCollisionRec(iPoint positionMapPlayer, iPoint positionMapOrb);
-
-	//Called when reseting the level
-	bool Reset();
-
 	// Called before quitting
 	bool CleanUp();
 
@@ -49,10 +39,15 @@ private:
 	SDL_Texture* backtext;
 	SDL_Texture* earthtex;
 	SDL_Texture* moontex;
+	SDL_Texture* gameovertex;
+
+	uint gameoversound;
+
+	bool gameoveronetimemusic = false;
 
 public:
 
-
+	fPoint gameoverpos;
 
 };
 

@@ -36,11 +36,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	int CollisionPlayer();
-	bool CollisionFloorPlayer();
-
-	int CheckCollision(iPoint positionMapPlayer);
-
 public:
 	fPoint position;	// Position
 	float vel;			// Velocity/Speed
@@ -49,13 +44,22 @@ public:
 	float angle_rotation_value;
 
 	Animation* currentanim;
-	Animation* currentanimcoll;
+	Animation* current2anim;
 
 	Animation idleanim;
 	Animation moveanim;
+	Animation explosionanim;
+
+	bool dead = false;
 
 private:
 	SDL_Texture* spritesheet = nullptr;
+	SDL_Texture* water = nullptr;
+	SDL_Texture* explosionsheet = nullptr;
+
+	uint explosionsound;
+
+	bool onetimesoundexplode = false;
 
 };
 
