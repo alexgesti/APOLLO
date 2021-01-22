@@ -43,11 +43,27 @@ public:
 private:
 
 	SDL_Texture* terratext;
+<<<<<<< Updated upstream
+=======
+	SDL_Texture* gameovertex;
+
+	fPoint gameoverpos;
+
+	uint gameoversound;
+	uint winsound;
+	uint explosionsound;
+
+	bool gameoveronetimemusic = false;
+	bool winonetimemusic = false;
+	bool onetimesoundexplode = false;
+	bool change = false;
+>>>>>>> Stashed changes
 
 public:
 
 	float grav;
 
+	fPoint winpos;
 };
 
 #endif // __SCENEEARTH_H__

@@ -65,6 +65,7 @@ bool Player::Start()
 	spritesheet = app->tex->Load("Assets/Characters/Player/player.png");
 	water = app->tex->Load("Assets/Screens/Gameplay/waterterraria.png");
 	explosionsheet = app->tex->Load("Assets/Characters/Player/explosion.png");
+	wintex = app->tex->Load("Assets/Screens/Gameplay/GETHARD_win.png");
 
 	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
 
@@ -149,6 +150,7 @@ bool Player::Update(float dt)
 		else if (position.y >= app->render->camera.h) position.y = -145;
 
 		if (position.x < 0) position.x = 0;
+<<<<<<< Updated upstream
 
 		// Moon aterrizaje
 		if (position.x >= 1125 &&
@@ -174,6 +176,13 @@ bool Player::Update(float dt)
 				onetimesoundexplode = true;
 			}
 		}
+=======
+		if (position.x > app->render->camera.w - 65) position.x = app->render->camera.w - 65;
+	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	{
+		win = true;
+	}
+>>>>>>> Stashed changes
 	}
 
 	currentanim->Update();
@@ -201,6 +210,12 @@ bool Player::PostUpdate()
 	if (app->modcontrol->blockx == false)
 	{
 		app->render->DrawTexture(water, 0, app->render->camera.y);
+	}
+
+	if (win)
+	{
+		SDL_Rect winrect = { 0, 0, app->render->camera.w, app->render->camera.h };
+		app->render->DrawTexture(wintex, 0, app->scenearth->winpos.y, &winrect);
 	}
 
 	return ret;
