@@ -3,6 +3,10 @@
 ## Description
 
 This game is a 2D platformer where you need to launch a rocket, land it on the moon and turn back to earth.
+
+## Key Features
+
+ - Win and Lose Conditions.
  
 ## Controls
 
