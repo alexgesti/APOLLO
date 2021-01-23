@@ -50,10 +50,13 @@ public:
 	Animation moveanim;
 	Animation explosionanim;
 
+	uint hurtsound;
+
 	bool ban = false;
 	bool dead = false;
 	bool win = false;
 	bool surviveinmoon = false;
+	bool hurtonetime = false;
 
 private:
 	SDL_Texture* spritesheet = nullptr;

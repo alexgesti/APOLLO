@@ -40,6 +40,7 @@ bool Scene::Start()
 	gameovertex = app->tex->Load("Assets/Screens/Gameplay/gameover.png");
 	gameoversound = app->audio->LoadFx("Assets/Audio/Music/gameover.ogg");
 	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
+	moonsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/moon.ogg");
 
 	gameoverpos.x = app->render->camera.w;
 
@@ -80,6 +81,14 @@ bool Scene::Update(float dt)
 	{
 		app->player->position.x = 1125;
 		app->player->angle = -90;
+		app->player->surviveinmoon = true;
+
+		if (moononetimesound == false)
+		{
+			app->audio->PlayFx(moonsound);
+		
+			moononetimesound = true;
+		}
 	}
 	else if (app->player->position.x >= 1125)
 	{
@@ -89,6 +98,7 @@ bool Scene::Update(float dt)
 
 		if (onetimesoundexplode == false)
 		{
+			app->audio->PlayMusic("", 0);
 			app->audio->PlayFx(explosionsound);
 
 			onetimesoundexplode = true;
@@ -110,13 +120,16 @@ bool Scene::Update(float dt)
 	}
 
 	//Change scene
-	if (app->player->position.x <= 120)
+	if (app->player->position.x <= 120
+		&& app->player->position.y >= app->render->camera.h / 2 - 180
+		&& app->player->position.y <= app->render->camera.h / 2 + 180)
 	{
 		app->player->angle = 180;
 		app->modcontrol->blocky = true;
 		app->scenearth->grav = 0;
 		app->player->position.x = app->render->camera.w / 2;
 		app->player->position.y = -145;
+		changescene = true;
 
 		app->modcontrol->currentscene = 1;
 	}

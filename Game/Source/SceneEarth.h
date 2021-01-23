@@ -43,19 +43,22 @@ public:
 private:
 
 	SDL_Texture* terratext;
-	SDL_Texture* gameovertex;
-
-	fPoint gameoverpos;
 
 	uint gameoversound;
 	uint explosionsound;
 	uint winsound;
+	uint watersound;
 
+	bool watersoundone = false;
 	bool winonetimemusic = false;
 	bool gameoveronetimemusic = false;
 	bool onetimesoundexplode = false;
 
 public:
+
+	SDL_Texture* gameovertex;
+
+	fPoint gameoverpos;
 
 	float grav;
 	fPoint winpos;

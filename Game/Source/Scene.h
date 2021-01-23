@@ -45,12 +45,15 @@ private:
 
 	uint gameoversound;
 	uint explosionsound;
+	uint moonsound;
 
 	bool gameoveronetimemusic = false;
-
+	bool moononetimesound = false;
 	bool onetimesoundexplode = false;
 
 public:
+
+	bool changescene = false;
 
 };
 

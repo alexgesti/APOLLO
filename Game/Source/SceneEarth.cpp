@@ -38,6 +38,9 @@ bool SceneEarth::Start()
 	gameoversound = app->audio->LoadFx("Assets/Audio/Music/gameover.ogg");
 	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
 	winsound = app->audio->LoadFx("Assets/Audio/Music/win.ogg");
+	watersound = app->audio->LoadFx("Assets/Audio/Fx/Characters/water.ogg");
+
+	app->audio->PlayMusic("Assets/Audio/Music/pepsiman.ogg", 0);
 
 	winpos.y = app->render->camera.h * 2;
 	gameoverpos.x = app->render->camera.w;
@@ -68,20 +71,30 @@ bool SceneEarth::Update(float dt)
 		if (app->player->position.y > 460)
 		{
 			if (app->player->position.x < 385 || app->player->position.x > 910)
-			{				
+			{		
+				if (watersoundone == false)
+				{
+					app->audio->PlayFx(watersound);
+
+					watersoundone = true;
+				}
+
 				if (app->player->acc >= 0)
 				{
 					app->player->acc -= 0.15f;
 				}
+
 				if (app->player->acc <= 0)
 				{
 					app->player->acc = 0;
 					grav += 0.05f;
 					app->player->position.y -= grav * dt;
 				}
+
 				if (app->player->position.y > 450 && app->player->position.y < 535 && grav > 0)
 				{
 					grav -= 0.1f;
+
 					if (grav >= -0.5f && grav <= 0.5f) app->player->win = true;
 				}
 
@@ -90,6 +103,7 @@ bool SceneEarth::Update(float dt)
 				{
 					if (winonetimemusic == false)
 					{
+						app->audio->PlayMusic("", 0);
 						app->audio->PlayFx(winsound);
 
 						winonetimemusic = true;
@@ -99,20 +113,17 @@ bool SceneEarth::Update(float dt)
 
 					if (winpos.y <= app->render->camera.h) winpos.y = app->render->camera.h;
 				}
-				else if (app->player->win && app->player->surviveinmoon == false) 
+				else if (app->player->win && app->player->surviveinmoon == false)
 				{
 					app->player->dead = true;
 
-					if (gameoveronetimemusic == false)
+					if (onetimesoundexplode == false)
 					{
-						app->audio->PlayFx(gameoversound);
+						app->audio->PlayMusic("", 0);
+						app->audio->PlayFx(explosionsound);
 
-						gameoveronetimemusic = true;
+						onetimesoundexplode = true;
 					}
-
-					gameoverpos.x -= 50;
-
-					if (gameoverpos.x <= 0) gameoverpos.x = 0;
 				}
 			}
 			else
@@ -121,23 +132,10 @@ bool SceneEarth::Update(float dt)
 
 				if (onetimesoundexplode == false)
 				{
+					app->audio->PlayMusic("", 0);
 					app->audio->PlayFx(explosionsound);
 
 					onetimesoundexplode = true;
-				}
-
-				if (app->player->explosionanim.FinishedAlready)
-				{
-					if (gameoveronetimemusic == false)
-					{
-						app->audio->PlayFx(gameoversound);
-
-						gameoveronetimemusic = true;
-					}
-
-					gameoverpos.x -= 50;
-
-					if (gameoverpos.x <= 0) gameoverpos.x = 0;
 				}
 			}
 		}
@@ -171,24 +169,11 @@ bool SceneEarth::Update(float dt)
 
 			if (onetimesoundexplode == false)
 			{
+				app->audio->PlayMusic("", 0);
 				app->audio->PlayFx(explosionsound);
 
 				onetimesoundexplode = true;
 			}
-		}
-
-		if (app->player->explosionanim.FinishedAlready)
-		{
-			if (gameoveronetimemusic == false)
-			{
-				app->audio->PlayFx(gameoversound);
-
-				gameoveronetimemusic = true;
-			}
-
-			gameoverpos.x -= 50;
-
-			if (gameoverpos.x <= 0) gameoverpos.x = 0;
 		}
 		
 		//Change scene
@@ -202,6 +187,21 @@ bool SceneEarth::Update(float dt)
 		}
 	}
 
+	// Lose Screen
+	if (app->player->explosionanim.FinishedAlready)
+	{
+		if (gameoveronetimemusic == false)
+		{
+			app->audio->PlayFx(gameoversound);
+
+			gameoveronetimemusic = true;
+		}
+
+		gameoverpos.x -= 50;
+
+		if (gameoverpos.x <= 0) gameoverpos.x = 0;
+	}
+
 	LOG("%f %f %f", app->player->acc, app->player->vel, grav);
 
 	return true;
@@ -213,12 +213,6 @@ bool SceneEarth::PostUpdate()
 	bool ret = true;
 	
 	app->render->DrawTexture(terratext, 0, app->render->camera.y);
-
-	if (app->player->explosionanim.FinishedAlready)
-	{
-		SDL_Rect gameoverrect = { 0, 0, app->render->camera.w, app->render->camera.h };
-		app->render->DrawTexture(gameovertex, gameoverpos.x, -app->render->camera.y - 30, &gameoverrect);
-	}
 
 	return ret;
 }

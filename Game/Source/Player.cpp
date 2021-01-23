@@ -67,6 +67,8 @@ bool Player::Start()
 	explosionsheet = app->tex->Load("Assets/Characters/Player/explosion.png");
 	wintex = app->tex->Load("Assets/Screens/Gameplay/GETHARD_win.png");
 
+	hurtsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/hurt.wav");
+
 	currentanim = &moveanim;
 	current2anim = &explosionanim;
 
@@ -97,13 +99,6 @@ bool Player::Update(float dt)
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && ban == false)
 			{
 				if (acc < 1.5f) acc += 0.01f * dt;
-				else acc = 1.5f;
-
-				currentanim = &moveanim;
-			}
-			else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-			{
-				if (acc < 1.5f) acc -= 0.01f * dt;
 				else acc = 1.5f;
 
 				currentanim = &moveanim;
@@ -146,16 +141,30 @@ bool Player::Update(float dt)
 		if (angle >= 360) angle -= 360;
 		else if (angle <= -360) angle += 360;
 
+		if (app->modcontrol->currentscene == 1 && app->scene->changescene)
+		{
+			if (angle <= 120) angle = 120;
+			else if (angle >= 240) angle = 240;
+		}
+
 		if (position.x < 0) position.x = 0;
 		if (position.x > app->render->camera.w - 65) position.x = app->render->camera.w - 65;
-		if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-		{
-			win = true;
-		}
+
+		if (app->scene->changescene) currentanim = &idleanim;
 	}
 
 	currentanim->Update();
-	if (dead) current2anim->Update();
+	if (dead)
+	{
+		current2anim->Update();
+
+		if (hurtonetime == false)
+		{
+			app->audio->PlayFx(hurtsound);
+			
+			hurtonetime = true;
+		}
+	}
 
 	return true;
 }
@@ -172,11 +181,11 @@ bool Player::PostUpdate()
 	}
 	else
 	{
-		SDL_Rect rect2 = current2anim->GetCurrentFrame();
+		SDL_Rect rect2 = current2anim->GetCurrentFrame(); 
 		if (app->modcontrol->currentscene == 2)
 		app->render->DrawTexture(explosionsheet, position.x - 15, position.y, &rect2, NULL, -90);
 		else if (app->modcontrol->currentscene == 1)
-		app->render->DrawTexture(explosionsheet, position.x - 15, position.y, &rect2, NULL, 0);
+		app->render->DrawTexture(explosionsheet, position.x - 40, position.y - 10, &rect2, NULL, 0);
 	}
 
 	if (app->modcontrol->blockx == false)
@@ -184,10 +193,16 @@ bool Player::PostUpdate()
 		app->render->DrawTexture(water, 0, app->render->camera.y);
 	}
 
-	if (win)
+	if (win && surviveinmoon)
 	{
 		SDL_Rect winrect = { 0, 0, app->render->camera.w, app->render->camera.h };
 		app->render->DrawTexture(wintex, 0, app->scenearth->winpos.y, &winrect);
+	}
+
+	if (explosionanim.FinishedAlready && app->modcontrol->currentscene == 1)
+	{
+		SDL_Rect gameoverrect = { 0, 0, app->render->camera.w, app->render->camera.h };
+		app->render->DrawTexture(app->scenearth->gameovertex, app->scenearth->gameoverpos.x, -app->render->camera.y - 30, &gameoverrect);
 	}
 
 	return ret;
