@@ -202,8 +202,6 @@ bool SceneEarth::Update(float dt)
 		if (gameoverpos.x <= 0) gameoverpos.x = 0;
 	}
 
-	LOG("%f %f %f", app->player->acc, app->player->vel, grav);
-
 	return true;
 }
 
