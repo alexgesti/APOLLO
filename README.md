@@ -1,12 +1,9 @@
 # APOLLO
+un link al github del proyecto.
 
-## Description
+## Goal
 
-This game is a 2D platformer where you need to launch a rocket, land it on the moon and turn back to earth.
-
-## Key Features
-
- - Win and Lose Conditions.
+This game is a 2D Space Rocket where you need to launch a rocket, land it on the moon and turn back to earth.
  
 ## Controls
 
@@ -14,7 +11,7 @@ This game is a 2D platformer where you need to launch a rocket, land it on the m
 
  - W: Launch the Rocket.
  
-#### Space
+### Space
 
  - W: Move forward.
  - A: Rotation to the left.
@@ -25,14 +22,26 @@ This game is a 2D platformer where you need to launch a rocket, land it on the m
  - A: Rotation to the left.
  - D: Rotation to the right.
 
+## How to win
+
+ - Press W until you arrive in to space.
+ - Press W until you arrive to the gravity of the Moon.
+ - Press A or D to change your angle to land in the Moon. (Need to be a 180º to land)
+ - Press W until you arrive in to the Earth.
+ - Prees A or D to change your angle to land in to the water.
+
 ## Developers
 
- - Raul Cano - Player Mechanics, Level Mechanics
+ - Raul Cano - Player Mechanics, Physics Logic
    - Github: https://github.com/ercanon
- - Alex Gesti - Level Mechanics, Pixel Artist
+ - Alex Gesti - Player Mechanics, Player Win/Lose Logic
    - Github: https://github.com/alexgesti
- - Pau Mota - Level Designer, Scenes Logic and Pixel Artist
+ - Pau Mota - Level Designer, Pixel Artist
    - Github: https://github.com/paumotta
+
+## Github project
+
+https://github.com/alexgesti/APOLLO
 
 ## License
 
