@@ -74,7 +74,7 @@ bool Player::Start()
 
 	position.x = app->render->camera.w / 2;
 	position.y = 444;
-	vel = 5;
+	vel = 3;
 	angle = 0;
 
 	return true;

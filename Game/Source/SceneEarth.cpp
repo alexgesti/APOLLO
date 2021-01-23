@@ -91,7 +91,7 @@ bool SceneEarth::Update(float dt)
 					app->player->position.y -= grav * dt;
 				}
 
-				if (app->player->position.y > 450 && app->player->position.y < 535 && grav > 0)
+				if (app->player->position.y > 460 && app->player->position.y < 535 && grav > 0)
 				{
 					grav -= 0.1f;
 
