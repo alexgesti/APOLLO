@@ -51,6 +51,8 @@ private:
 	bool moononetimesound = false;
 	bool onetimesoundexplode = false;
 
+	float impulse = 0;
+
 public:
 
 	bool changescene = false;

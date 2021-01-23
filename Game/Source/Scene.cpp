@@ -72,14 +72,14 @@ bool Scene::Update(float dt)
 	}
 
 	// Moon aterrizaje
-	if (app->player->position.x >= 1125 &&
+	if (app->player->position.x >= 1125 + impulse &&
 		app->player->angle <= 275 &&
 		app->player->angle >= 265 ||
-		app->player->position.x >= 1125 &&
+		app->player->position.x >= 1125 + impulse &&
 		app->player->angle <= -85 &&
 		app->player->angle >= -95)
 	{
-		app->player->position.x = 1125;
+		app->player->position.x = 1125 + impulse;
 		app->player->angle = -90;
 		app->player->surviveinmoon = true;
 
@@ -90,9 +90,9 @@ bool Scene::Update(float dt)
 			moononetimesound = true;
 		}
 	}
-	else if (app->player->position.x >= 1125)
+	else if (app->player->position.x >= 1125 + impulse)
 	{
-		app->player->position.x = 1125;
+		app->player->position.x = 1125 + impulse;
 
 		app->player->dead = true;
 
@@ -104,6 +104,8 @@ bool Scene::Update(float dt)
 			onetimesoundexplode = true;
 		}
 	}
+
+	if (app->player->surviveinmoon == true) impulse += 0.01f;
 
 	if (app->player->explosionanim.FinishedAlready)
 	{
@@ -147,7 +149,7 @@ bool Scene::PostUpdate()
 
 	for (int i = 0; i < 5; i++)
 	{
-		app->render->DrawTexture(moontex, app->render->camera.w - 216, 256 * i, NULL);
+		app->render->DrawTexture(moontex, app->render->camera.w - 216 + impulse, 256 * i, NULL);
 	}
 
 	app->render->DrawTexture(earthtex, -108, app->render->camera.h - 216 * 2, NULL);
