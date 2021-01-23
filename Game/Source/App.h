@@ -20,11 +20,8 @@ class Textures;
 class Audio;
 class Scene;
 class SceneEarth;
-//class SceneLose;
-//class SceneWin;
 class Player;
 class ModuleController;
-//class GameplayHUD;
 
 class App
 {
@@ -98,11 +95,8 @@ public:
 	Audio* audio;
 	Scene* scene;
 	SceneEarth* scenearth;
-	//SceneLose* scenelose;
-	//SceneWin* scenewin;
 	Player* player;
 	ModuleController* modcontrol;
-	//GameplayHUD* gamehud;
 
 	uint32 cappedms;
 

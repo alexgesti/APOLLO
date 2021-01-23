@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "SceneEarth.h"
 #include "Player.h"
 #include "Audio.h"
 #include "ModuleController.h"
@@ -35,9 +36,11 @@ bool Scene::Start()
 	backtext = app->tex->Load("Assets/Screens/Gameplay/background.png");
 	earthtex = app->tex->Load("Assets/Screens/Gameplay/earth.png");
 	moontex = app->tex->Load("Assets/Screens/Gameplay/landplace.png");
+	
 	gameovertex = app->tex->Load("Assets/Screens/Gameplay/gameover.png");
-
 	gameoversound = app->audio->LoadFx("Assets/Audio/Music/gameover.ogg");
+	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
+	moonsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/moon.ogg");
 
 	gameoverpos.x = app->render->camera.w;
 
@@ -53,8 +56,56 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	dt *= 100;
+
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
+
+	// Limits
+	if (app->player->position.y <= -145) app->player->position.y = app->render->camera.h;
+	else if (app->player->position.y >= app->render->camera.h) app->player->position.y = -145;
+
+	// Gravity moon
+	if (app->player->position.x >= 810)
+	{
+		app->player->position.x += 0.75f * dt;
+	}
+
+	// Moon aterrizaje
+	if (app->player->position.x >= 1125 + impulse &&
+		app->player->angle <= 275 &&
+		app->player->angle >= 265 ||
+		app->player->position.x >= 1125 + impulse &&
+		app->player->angle <= -85 &&
+		app->player->angle >= -95)
+	{
+		app->player->position.x = 1125 + impulse;
+		app->player->angle = -90;
+		app->player->surviveinmoon = true;
+
+		if (moononetimesound == false)
+		{
+			app->audio->PlayFx(moonsound);
+		
+			moononetimesound = true;
+		}
+	}
+	else if (app->player->position.x >= 1125 + impulse)
+	{
+		app->player->position.x = 1125 + impulse;
+
+		app->player->dead = true;
+
+		if (onetimesoundexplode == false)
+		{
+			app->audio->PlayMusic("", 0);
+			app->audio->PlayFx(explosionsound);
+
+			onetimesoundexplode = true;
+		}
+	}
+
+	if (app->player->surviveinmoon == true) impulse += 0.01f;
 
 	if (app->player->explosionanim.FinishedAlready)
 	{
@@ -72,11 +123,15 @@ bool Scene::Update(float dt)
 
 	//Change scene
 	if (app->player->position.x <= 120
-		&& app->player->surviveinmoon)
+		&& app->player->position.y >= app->render->camera.h / 2 - 180
+		&& app->player->position.y <= app->render->camera.h / 2 + 180)
 	{
 		app->player->angle = 180;
+		app->modcontrol->blocky = true;
+		app->scenearth->grav = 0;
 		app->player->position.x = app->render->camera.w / 2;
 		app->player->position.y = -145;
+		changescene = true;
 
 		app->modcontrol->currentscene = 1;
 	}
@@ -94,7 +149,7 @@ bool Scene::PostUpdate()
 
 	for (int i = 0; i < 5; i++)
 	{
-		app->render->DrawTexture(moontex, app->render->camera.w - 216, 256 * i, NULL);
+		app->render->DrawTexture(moontex, app->render->camera.w - 216 + impulse, 256 * i, NULL);
 	}
 
 	app->render->DrawTexture(earthtex, -108, app->render->camera.h - 216 * 2, NULL);

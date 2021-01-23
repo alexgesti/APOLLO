@@ -34,17 +34,17 @@ bool SceneEarth::Start()
 {
 	terratext = app->tex->Load("Assets/Screens/Gameplay/terrariacaptura.png");
 
-<<<<<<< Updated upstream
-=======
 	gameovertex = app->tex->Load("Assets/Screens/Gameplay/gameover.png");
 	gameoversound = app->audio->LoadFx("Assets/Audio/Music/gameover.ogg");
 	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
 	winsound = app->audio->LoadFx("Assets/Audio/Music/win.ogg");
+	watersound = app->audio->LoadFx("Assets/Audio/Fx/Characters/water.ogg");
 
-	gameoverpos.x = app->render->camera.w;
+	app->audio->PlayMusic("Assets/Audio/Music/pepsiman.ogg", 0);
+
 	winpos.y = app->render->camera.h * 2;
+	gameoverpos.x = app->render->camera.w;
 
->>>>>>> Stashed changes
 	grav = 0;
 
 	return true;
@@ -59,24 +59,90 @@ bool SceneEarth::PreUpdate()
 // Called each loop iteration
 bool SceneEarth::Update(float dt)
 { 
+	dt *= 100;
+
 	//Camera
 	app->render->camera.x = 0;
-	if(app->player->position.y >= 0) app->render->camera.y = -app->player->position.y * 1.5;
+	if(app->player->position.y >= 0 && app->player->position.y <= 3139) app->render->camera.y = -app->player->position.y * 1.5;
 
 	if (app->modcontrol->blockx == false)
 	{
 		//Buoyancy
-		if (app->player->position.y > 447)
+		if (app->player->position.y > 460)
 		{
-
 			if (app->player->position.x < 385 || app->player->position.x > 910)
-			{
+			{		
+				if (watersoundone == false)
+				{
+					app->audio->PlayFx(watersound);
 
+					watersoundone = true;
+				}
+
+				if (app->player->acc >= 0)
+				{
+					app->player->acc -= 0.15f;
+				}
+
+				if (app->player->acc <= 0)
+				{
+					app->player->acc = 0;
+					grav += 0.05f;
+					app->player->position.y -= grav * dt;
+				}
+
+				if (app->player->position.y > 460 && app->player->position.y < 535 && grav > 0)
+				{
+					grav -= 0.1f;
+
+					if (grav >= -0.5f && grav <= 0.5f) app->player->win = true;
+				}
+
+				//Win
+				if (app->player->win && app->player->surviveinmoon == true)
+				{
+					if (winonetimemusic == false)
+					{
+						app->audio->PlayMusic("", 0);
+						app->audio->PlayFx(winsound);
+
+						winonetimemusic = true;
+					}
+
+					winpos.y -= 50;
+
+					if (winpos.y <= app->render->camera.h) winpos.y = app->render->camera.h;
+				}
+				else if (app->player->win && app->player->surviveinmoon == false)
+				{
+					app->player->dead = true;
+
+					if (onetimesoundexplode == false)
+					{
+						app->audio->PlayMusic("", 0);
+						app->audio->PlayFx(explosionsound);
+
+						onetimesoundexplode = true;
+					}
+				}
 			}
 			else
 			{
+				app->player->dead = true;
 
+				if (onetimesoundexplode == false)
+				{
+					app->audio->PlayMusic("", 0);
+					app->audio->PlayFx(explosionsound);
+
+					onetimesoundexplode = true;
+				}
 			}
+		}
+		else 
+		{
+			app->player->vel = 1;
+			if(app->player->acc < 7.0f) app->player->acc += 0.05f;
 		}
 	}
 	else
@@ -90,35 +156,53 @@ bool SceneEarth::Update(float dt)
 			grav = 0.0f;
 		}
 
-		app->player->position.y += grav;
-	}
-	
-	//Change scene
-	if (app->player->position.y <= -145 && app->player->surviveinmoon == false)
-	{
-		app->player->angle = 90;
-		app->player->position.x = 120;
-		app->player->position.y = app->render->camera.h / 2 - 32;
-		
-		app->modcontrol->currentscene = 2;
-	}
+		app->player->position.y += grav * dt;
 
-	//Win
-	if (app->player->win)
-	{
-		if (winonetimemusic == false)
+		//Dead
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_UP && app->player->acc > 1)
 		{
-			app->audio->PlayFx(winsound);
+			app->player->ban = true;
+		}
+		if(app->player->position.y >= 444 && app->player->ban == true)
+		{
+			app->player->dead = true;
 
-			winonetimemusic = true;
+			if (onetimesoundexplode == false)
+			{
+				app->audio->PlayMusic("", 0);
+				app->audio->PlayFx(explosionsound);
+
+				onetimesoundexplode = true;
+			}
+		}
+		
+		//Change scene
+		if (app->player->position.y <= -145)
+		{
+			app->player->angle = 90;
+			app->player->position.x = 120;
+			app->player->position.y = app->render->camera.h / 2 - 32;
+		
+			app->modcontrol->currentscene = 2;
+		}
+	}
+
+	// Lose Screen
+	if (app->player->explosionanim.FinishedAlready)
+	{
+		if (gameoveronetimemusic == false)
+		{
+			app->audio->PlayFx(gameoversound);
+
+			gameoveronetimemusic = true;
 		}
 
-		winpos.y -= 50;
+		gameoverpos.x -= 50;
 
-		if (winpos.y <= app->render->camera.h) winpos.y = app->render->camera.h;
+		if (gameoverpos.x <= 0) gameoverpos.x = 0;
 	}
 
-	LOG("%f %f %f %f %f", app->player->position.x, app->player->position.y, app->player->vel, app->player->acc, grav);
+	LOG("%f %f %f", app->player->acc, app->player->vel, grav);
 
 	return true;
 }

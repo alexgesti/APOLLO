@@ -50,19 +50,19 @@ public:
 	Animation moveanim;
 	Animation explosionanim;
 
+	uint hurtsound;
+
+	bool ban = false;
 	bool dead = false;
 	bool win = false;
 	bool surviveinmoon = false;
+	bool hurtonetime = false;
 
 private:
 	SDL_Texture* spritesheet = nullptr;
 	SDL_Texture* water = nullptr;
 	SDL_Texture* explosionsheet = nullptr;
 	SDL_Texture* wintex;
-
-	uint explosionsound;
-
-	bool onetimesoundexplode = false;
 
 };
 

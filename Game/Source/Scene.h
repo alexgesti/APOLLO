@@ -41,13 +41,21 @@ private:
 	SDL_Texture* moontex;
 	SDL_Texture* gameovertex;
 
+	fPoint gameoverpos;
+
 	uint gameoversound;
+	uint explosionsound;
+	uint moonsound;
 
 	bool gameoveronetimemusic = false;
+	bool moononetimesound = false;
+	bool onetimesoundexplode = false;
+
+	float impulse = 0;
 
 public:
 
-	fPoint gameoverpos;
+	bool changescene = false;
 
 };
 

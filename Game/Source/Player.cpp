@@ -67,14 +67,14 @@ bool Player::Start()
 	explosionsheet = app->tex->Load("Assets/Characters/Player/explosion.png");
 	wintex = app->tex->Load("Assets/Screens/Gameplay/GETHARD_win.png");
 
-	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
+	hurtsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/hurt.wav");
 
 	currentanim = &moveanim;
 	current2anim = &explosionanim;
 
 	position.x = app->render->camera.w / 2;
 	position.y = 444;
-	vel = 5;
+	vel = 3;
 	angle = 0;
 
 	return true;
@@ -93,27 +93,23 @@ bool Player::Update(float dt)
 
 	if (dead == false)
 	{
-		// Movement
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		if (app->modcontrol->blocky == false)
 		{
-			if (acc < 1.5f) acc += 0.01f * dt;
-			else acc = 1.5f;
+			// Movement
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && ban == false)
+			{
+				if (acc < 1.5f) acc += 0.01f * dt;
+				else acc = 1.5f;
 
-			currentanim = &moveanim;
-		}
-		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		{
-			if (acc < 1.5f) acc -= 0.01f * dt;
-			else acc = 1.5f;
-
-			currentanim = &moveanim;
-		}
-		else
-		{
-			if (acc < 1.51f && acc >= 0.01f) acc -= 0.005f * dt;
-			else if (acc < 0.01f) acc = 0;
-			app->scenearth->grav += 0.05f;
-			currentanim = &idleanim;
+				currentanim = &moveanim;
+			}
+			else
+			{
+				if (acc < 1.51f && acc >= 0.01f) acc -= 0.005f * dt;
+				else if (acc < 0.01f) acc = 0;
+				app->scenearth->grav += 0.05f;
+				currentanim = &idleanim;
+			}
 		}
 
 		position.y -= vel * cos(angle * M_PI / 180) * acc;
@@ -145,48 +141,30 @@ bool Player::Update(float dt)
 		if (angle >= 360) angle -= 360;
 		else if (angle <= -360) angle += 360;
 
-		// Limits
-		if (position.y <= -145) position.y = app->render->camera.h;
-		else if (position.y >= app->render->camera.h) position.y = -145;
+		if (app->modcontrol->currentscene == 1 && app->scene->changescene)
+		{
+			if (angle <= 120) angle = 120;
+			else if (angle >= 240) angle = 240;
+		}
 
 		if (position.x < 0) position.x = 0;
-<<<<<<< Updated upstream
-
-		// Moon aterrizaje
-		if (position.x >= 1125 &&
-			angle <= 275 &&
-			angle >= 265 ||
-			position.x >= 1125 &&
-			angle <= -85 &&
-			angle >= -95)
-		{
-			position.x = 1125;
-			angle = -90;
-		}
-		else if (position.x >= 1125)
-		{
-			position.x = 1125;
-
-			dead = true;
-
-			if (onetimesoundexplode == false)
-			{
-				app->audio->PlayFx(explosionsound);
-
-				onetimesoundexplode = true;
-			}
-		}
-=======
 		if (position.x > app->render->camera.w - 65) position.x = app->render->camera.w - 65;
-	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-	{
-		win = true;
-	}
->>>>>>> Stashed changes
+
+		if (app->scene->changescene) currentanim = &idleanim;
 	}
 
 	currentanim->Update();
-	if (dead) current2anim->Update();
+	if (dead)
+	{
+		current2anim->Update();
+
+		if (hurtonetime == false)
+		{
+			app->audio->PlayFx(hurtsound);
+			
+			hurtonetime = true;
+		}
+	}
 
 	return true;
 }
@@ -203,8 +181,11 @@ bool Player::PostUpdate()
 	}
 	else
 	{
-		SDL_Rect rect2 = current2anim->GetCurrentFrame();
+		SDL_Rect rect2 = current2anim->GetCurrentFrame(); 
+		if (app->modcontrol->currentscene == 2)
 		app->render->DrawTexture(explosionsheet, position.x - 15, position.y, &rect2, NULL, -90);
+		else if (app->modcontrol->currentscene == 1)
+		app->render->DrawTexture(explosionsheet, position.x - 40, position.y - 10, &rect2, NULL, 0);
 	}
 
 	if (app->modcontrol->blockx == false)
@@ -212,10 +193,16 @@ bool Player::PostUpdate()
 		app->render->DrawTexture(water, 0, app->render->camera.y);
 	}
 
-	if (win)
+	if (win && surviveinmoon)
 	{
 		SDL_Rect winrect = { 0, 0, app->render->camera.w, app->render->camera.h };
 		app->render->DrawTexture(wintex, 0, app->scenearth->winpos.y, &winrect);
+	}
+
+	if (explosionanim.FinishedAlready && app->modcontrol->currentscene == 1)
+	{
+		SDL_Rect gameoverrect = { 0, 0, app->render->camera.w, app->render->camera.h };
+		app->render->DrawTexture(app->scenearth->gameovertex, app->scenearth->gameoverpos.x, -app->render->camera.y - 30, &gameoverrect);
 	}
 
 	return ret;

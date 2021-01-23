@@ -43,26 +43,24 @@ public:
 private:
 
 	SDL_Texture* terratext;
-<<<<<<< Updated upstream
-=======
+
+	uint gameoversound;
+	uint explosionsound;
+	uint winsound;
+	uint watersound;
+
+	bool watersoundone = false;
+	bool winonetimemusic = false;
+	bool gameoveronetimemusic = false;
+	bool onetimesoundexplode = false;
+
+public:
+
 	SDL_Texture* gameovertex;
 
 	fPoint gameoverpos;
 
-	uint gameoversound;
-	uint winsound;
-	uint explosionsound;
-
-	bool gameoveronetimemusic = false;
-	bool winonetimemusic = false;
-	bool onetimesoundexplode = false;
-	bool change = false;
->>>>>>> Stashed changes
-
-public:
-
 	float grav;
-
 	fPoint winpos;
 };
 

@@ -6,12 +6,8 @@
 #include "Audio.h"
 #include "Scene.h"
 #include "SceneEarth.h"
-#include "SceneLose.h"
-#include "SceneWin.h"
 #include "Player.h"
 #include "ModuleController.h"
-#include "GameplayHUD.h"
-
 
 #include "Defs.h"
 #include "Log.h"
@@ -32,11 +28,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	scene = new Scene();
 	scenearth = new SceneEarth();
-	//scenelose = new SceneLose();
-	//scenewin = new SceneWin();
 	player = new Player();
 	modcontrol = new ModuleController();
-	//gamehud = new GameplayHUD();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -46,11 +39,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(scenearth);
 	AddModule(scene);
-	//AddModule(scenelose);
-	//AddModule(scenewin);
 	AddModule(player);
 	AddModule(modcontrol);
-	//AddModule(gamehud);
 
 	// Render last to swap buffer
 	AddModule(render);
