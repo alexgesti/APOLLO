@@ -1,5 +1,4 @@
 # APOLLO
-un link al github del proyecto.
 
 ## Goal
 
