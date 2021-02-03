@@ -118,10 +118,10 @@ bool Player::Update(float dt)
 
 		acct = acc - app->scenearth->grav - app->scenearth->drag;
 
-		vel += acct*dt;
-
 		position.y -= (vel*dt + acct*dt*dt*0.5) * cos(angle * M_PI / 180);
 		position.x += (vel*dt + acct*dt*dt*0.5) * sin(angle * M_PI / 180);
+
+		vel += acct*dt;
 
 		LOG("\nvel: %f\nacct: %f\nacc: %f\ndrag: %f\ngrav: %f", vel, acct, acc, app->scenearth->drag, app->scenearth->grav);
 

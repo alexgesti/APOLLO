@@ -10,6 +10,7 @@
 
 #include "Defs.h"
 #include "Log.h"
+#define G  1.23 * pow(10,-11)
 
 SceneEarth::SceneEarth() : Module()
 {
@@ -40,7 +41,7 @@ bool SceneEarth::Start()
 	winsound = app->audio->LoadFx("Assets/Audio/Music/win.ogg");
 	watersound = app->audio->LoadFx("Assets/Audio/Fx/Characters/water.ogg");
 
-	app->audio->PlayMusic("Assets/Audio/Music/pepsiman.ogg", 0);
+	//app->audio->PlayMusic("Assets/Audio/Music/pepsiman.ogg", 0);
 
 	winpos.y = app->render->camera.h * 2;
 	gameoverpos.x = app->render->camera.w;
@@ -156,7 +157,8 @@ bool SceneEarth::Update(float dt)
 		}
 		else
 		{
-			grav = 9.8f;
+			grav = (G*mearth)/pow((mesosearth + radearth - app->player->position.y*50),2);
+
 		}
 
 		//Dead
@@ -185,9 +187,9 @@ bool SceneEarth::Update(float dt)
 	}
 
 	if(app->player->vel < 10 && app->player->vel > -10)
-	drag = cofaero * 0.5 * densidad * app->player->vel * app->player->vel * superficie;
+	drag = (cofaero * 0.5 * densidad * app->player->vel * app->player->vel * superficie )/ 2*pow(10,4);
 
-	// Lose Screen
+	// Lose Screen 
 	if (app->player->explosionanim.FinishedAlready)
 	{
 		if (gameoveronetimemusic == false)

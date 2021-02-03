@@ -57,6 +57,9 @@ private:
 	float cofaero;
 	float densidad;
 	float superficie;
+	float radearth = 1180000;
+	float mesosearth = 22200;
+	float mearth = 1.1f * pow(10, 24);
 
 public:
 
