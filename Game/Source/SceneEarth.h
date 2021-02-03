@@ -54,6 +54,10 @@ private:
 	bool gameoveronetimemusic = false;
 	bool onetimesoundexplode = false;
 
+	float cofaero;
+	float densidad;
+	float superficie;
+
 public:
 
 	SDL_Texture* gameovertex;
@@ -61,6 +65,7 @@ public:
 	fPoint gameoverpos;
 
 	float grav;
+	float drag;
 	fPoint winpos;
 };
 

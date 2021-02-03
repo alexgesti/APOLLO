@@ -74,7 +74,7 @@ bool Player::Start()
 
 	position.x = app->render->camera.w / 2;
 	position.y = 444;
-	vel = 3;
+	vel = 0;
 	angle = 0;
 
 	return true;
@@ -89,31 +89,41 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
-	dt *= 100;
-
 	if (dead == false)
 	{
 		if (app->modcontrol->blocky == false)
 		{
 			// Movement
-			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && ban == false)
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			{
-				if (acc < 1.5f) acc += 0.01f * dt;
-				else acc = 1.5f;
+				if (acc < 50)
+				{
+					acc += 0.05f;
+				}
 
 				currentanim = &moveanim;
 			}
 			else
 			{
-				if (acc < 1.51f && acc >= 0.01f) acc -= 0.005f * dt;
-				else if (acc < 0.01f) acc = 0;
-				app->scenearth->grav += 0.05f;
+				if (acc > 0)
+				{
+					acc -= 0.5f;
+				}
+
+				//app->scenearth->grav += 0.05f;
+
 				currentanim = &idleanim;
 			}
 		}
 
-		position.y -= vel * cos(angle * M_PI / 180) * acc;
-		position.x += vel * sin(angle * M_PI / 180) * acc;
+		acct = acc - app->scenearth->grav - app->scenearth->drag;
+
+		vel += acct*dt;
+
+		position.y -= (vel*dt + acct*dt*dt*0.5) * cos(angle * M_PI / 180);
+		position.x += (vel*dt + acct*dt*dt*0.5) * sin(angle * M_PI / 180);
+
+		LOG("\nvel: %f\nacct: %f\nacc: %f\ndrag: %f\ngrav: %f", vel, acct, acc, app->scenearth->drag, app->scenearth->grav);
 
 		// Rotation
 		if (app->modcontrol->blockx == false)

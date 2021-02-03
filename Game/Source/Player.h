@@ -39,7 +39,8 @@ public:
 public:
 	fPoint position;	// Position
 	float vel;			// Velocity/Speed
-	float acc;			// Acceleration
+	float acc;			// Player Acceleration
+	float acct;			// Total Acceleration
 	float angle;		// Angle
 	float angle_rotation_value;
 

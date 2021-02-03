@@ -1,0 +1,29 @@
+﻿  SceneEarth.cpp
+C:\Users\ercanon\Documents\GitHub\APOLLO\Game\Source\Animation.h(58,20): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+C:\Users\ercanon\Documents\GitHub\APOLLO\Game\Source\Animation.h(60,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\ercanon\Documents\GitHub\APOLLO\Game\Source\Animation.h(67,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\ercanon\Documents\GitHub\APOLLO\Game\Source\Player.h(8,1): warning C4005: 'M_PI': redefinición de macro
+C:\Users\ercanon\Documents\GitHub\APOLLO\Game\Source\External\SDL\include\SDL_stdinc.h(436): message : vea la definición anterior de 'M_PI'
+C:\Users\ercanon\Documents\GitHub\APOLLO\Game\Source\SceneEarth.cpp(45,35): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\ercanon\Documents\GitHub\APOLLO\Game\Source\SceneEarth.cpp(46,37): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\ercanon\Documents\GitHub\APOLLO\Game\Source\SceneEarth.cpp(67,119): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ercanon\Documents\GitHub\APOLLO\Game\Source\SceneEarth.cpp(115,75): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\ercanon\Documents\GitHub\APOLLO\Game\Source\SceneEarth.cpp(181,56): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\ercanon\Documents\GitHub\APOLLO\Game\Source\SceneEarth.cpp(188,72): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+  Game.vcxproj -> C:\Users\ercanon\Documents\GitHub\APOLLO\Build\Debug\Game.exe
