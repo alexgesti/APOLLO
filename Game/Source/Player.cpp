@@ -113,7 +113,7 @@ bool Player::Update(float dt)
 			}
 		}
 
-		acct.y = acc.y - grav.y - app->scenearth->drag;
+		acct.y = acc.y - grav.y - app->scenearth->drag + app->scenearth->flot;
 		acct.x = acc.x + grav.x;
 
 		// Verlet
@@ -132,11 +132,21 @@ bool Player::Update(float dt)
 			{
 				if (angle_rotation_value > -2) angle_rotation_value -= 0.1f;
 				else angle_rotation_value = -2;
+
+				if (app->modcontrol->currentscene == 1)
+				{
+					vel.x = 175;
+				}
 			}
 			else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 			{
 				if (angle_rotation_value < 2) angle_rotation_value += 0.1f;
 				else angle_rotation_value = 2;
+
+				if (app->modcontrol->currentscene == 1)
+				{
+					vel.x = -175;
+				}
 			}
 			else
 			{

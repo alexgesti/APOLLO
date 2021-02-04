@@ -51,11 +51,11 @@ private:
 	bool moononetimesound = false;
 	bool onetimesoundexplode = false;
 
-	float radmoon = 0.32f * pow(10,6);
-	float dgravmoon = 56250;
-	float memoon = 1.36f * pow(10, 22);
-	float velmoon = 0;
-	float posmoon;
+	float radmoon = 0.32f * pow(10,6);		//radio de la luna escalado al mapa
+	float dgravmoon = 56250;				//distancia del punto inicial de la scene al la luna, pasado mediante PIXELS TO METERS
+	float memoon = 1.36f * pow(10, 22);		//masa de la luna escalado al mapa
+	float velmoon = 0;						//velocidad inicial de la luna
+	float posmoon;							//posicion de la luna
 
 public:
 

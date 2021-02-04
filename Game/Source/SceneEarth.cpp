@@ -79,6 +79,7 @@ bool SceneEarth::Update(float dt)
 
 					watersoundone = true;
 				}
+				flot = vagua * dagua * 9.8f;
 
 				/*if (app->player->acc >= 0)
 				{
