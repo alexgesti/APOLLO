@@ -45,7 +45,7 @@ bool Scene::Start()
 
 	gameoverpos.x = app->render->camera.w;
 
-	app->player->grav = 1.62f;
+	app->player->grav.x = 1.62f;
 
 	return true;
 }
@@ -109,7 +109,7 @@ bool Scene::Update(float dt)
 	}
 	else if (app->player->position.x < 1125 && app->modcontrol->currentscene == 2)
 	{
-		app->player->grav = (G * memoon) / pow((radmoon - app->player->position.y * 50), 2);
+		app->player->grav.x = (G * memoon) / pow((radmoon - app->player->position.y * 50), 2);
 	}
 
 	if (app->player->surviveinmoon == true) impulse += 0.01f;
@@ -135,7 +135,7 @@ bool Scene::Update(float dt)
 	{
 		app->player->angle = 180;
 		app->modcontrol->blocky = true;
-		app->player->grav = 0;
+		app->player->grav.x = 0;
 		app->player->position.x = app->render->camera.w / 2;
 		app->player->position.y = -145;
 		changescene = true;

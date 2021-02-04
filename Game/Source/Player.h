@@ -38,11 +38,11 @@ public:
 
 public:
 	fPoint position;	// Position
-	float vel;			// Velocity/Speed
-	float acc;			// Player Acceleration
-	float acct;			// Total Acceleration
+	fPoint vel;			// Velocity/Speed
+	fPoint acc;			// Player Acceleration
+	fPoint acct;		// Total Acceleration
 	float angle;		// Angle
-	float grav;			// Gravity
+	fPoint grav;		// Gravity
 	float angle_rotation_value;
 
 	Animation* currentanim;

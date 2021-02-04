@@ -74,7 +74,8 @@ bool Player::Start()
 
 	position.x = app->render->camera.w / 2;
 	position.y = 444;
-	vel = 0;
+	vel.x = 0;
+	vel.y = 0;
 	angle = 0;
 
 	return true;
@@ -96,18 +97,20 @@ bool Player::Update(float dt)
 			// Movement
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			{
-				if (acc < 50)
+				if (acc.y < 50 && acc.x < 50)
 				{
-					acc += 0.05f;
+					acc.y += 0.05f;
+					if(app->modcontrol->currentscene == 2) acc.x += 0.05f;
 				}
 
 				currentanim = &moveanim;
 			}
 			else
 			{
-				if (acc > 0)
+				if (acc.y > 0 && acc.y > 0)
 				{
-					acc -= 0.5f;
+					acc.y -= 0.5f;
+					if (app->modcontrol->currentscene == 2) acc.x -= 0.5f;
 				}
 
 				//app->scenearth->grav += 0.05f;
@@ -116,15 +119,17 @@ bool Player::Update(float dt)
 			}
 		}
 
-		acct = acc - grav - app->scenearth->drag;
+		acct.y = acc.y - grav.y - app->scenearth->drag;
+		acct.x = acc.x - grav.x;
 
 		// Verlet
-		position.y -= (vel*dt + acct*dt*dt*0.5) * cos(angle * M_PI / 180);
-		position.x += (vel*dt + acct*dt*dt*0.5) * sin(angle * M_PI / 180);
+		position.y -= (vel.y * dt + acct.y * dt * dt * 0.5) * cos(angle * M_PI / 180);
+		position.x += (vel.x * dt + acct.x * dt * dt * 0.5) * sin(angle * M_PI / 180);
 
-		vel += acct*dt;
+		vel.y += acct.y * dt;
+		vel.x += acct.x * dt;
 
-		LOG("\nvel: %f\nacct: %f\nacc: %f\ndrag: %f\ngrav: %f", vel, acct, acc, app->scenearth->drag, grav);
+		//LOG("\nvel: %f\nacct: %f\nacc: %f\ndrag: %f\ngrav: %f", vel, acct, acc, app->scenearth->drag, grav);
 
 		// Rotation
 		if (app->modcontrol->blockx == false)

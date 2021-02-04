@@ -1,32 +1,100 @@
-﻿  Scene.cpp
+﻿  Player.cpp
 D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Animation.h(58,20): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
 D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Animation.h(60,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Animation.h(67,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.h(8,1): warning C4005: 'M_PI': macro redefinition
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\External\SDL\include\SDL_stdinc.h(436): message : see previous definition of 'M_PI'
 D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.h(55,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.h(56,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\SceneEarth.h(62,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.cpp(75,37): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.cpp(126,80): warning C4244: '-=': conversion from 'double' to 'TYPE', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.cpp(167,83): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.cpp(196,61): warning C4244: 'argument': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.cpp(196,49): warning C4244: 'argument': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.cpp(202,69): warning C4244: 'argument': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.cpp(202,55): warning C4244: 'argument': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.cpp(204,72): warning C4244: 'argument': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.cpp(204,55): warning C4244: 'argument': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.cpp(215,61): warning C4244: 'argument': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.cpp(221,84): warning C4244: 'argument': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+  SceneEarth.cpp
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Animation.h(58,20): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Animation.h(60,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Animation.h(67,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\SceneEarth.h(62,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.h(8,1): warning C4005: 'M_PI': macro redefinition
 D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\External\SDL\include\SDL_stdinc.h(436): message : see previous definition of 'M_PI'
-D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.cpp(46,37): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\SceneEarth.cpp(46,35): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
           with
           [
               TYPE=float
           ]
-D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.cpp(66,84): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\SceneEarth.cpp(47,37): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
           with
           [
               TYPE=float
           ]
-D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.cpp(110,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.cpp(137,51): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\SceneEarth.cpp(68,119): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\SceneEarth.cpp(116,75): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
           with
           [
               TYPE=float
           ]
-D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.cpp(157,65): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.cpp(165,52): warning C4244: 'argument': conversion from 'TYPE' to 'int', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\SceneEarth.cpp(160,36): warning C4244: '=': conversion from 'double' to 'TYPE', possible loss of data
           with
           [
               TYPE=float
           ]
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\SceneEarth.cpp(182,56): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\SceneEarth.cpp(193,76): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
   Game.vcxproj -> D:\cosas de clase\FisicaII\Proyecto teoria\Build\Debug\Game.exe
