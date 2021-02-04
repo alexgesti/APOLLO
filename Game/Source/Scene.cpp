@@ -11,6 +11,7 @@
 
 #include "Defs.h"
 #include "Log.h"
+#define G  1.23 * pow(10,-11)
 
 Scene::Scene() : Module()
 {
@@ -44,6 +45,8 @@ bool Scene::Start()
 
 	gameoverpos.x = app->render->camera.w;
 
+	app->player->grav = 1.62f;
+
 	return true;
 }
 
@@ -72,14 +75,14 @@ bool Scene::Update(float dt)
 	}
 
 	// Moon aterrizaje
-	if (app->player->position.x >= 1125 + impulse &&
+	if (app->player->position.x >= 1125 &&
 		app->player->angle <= 275 &&
 		app->player->angle >= 265 ||
-		app->player->position.x >= 1125 + impulse &&
+		app->player->position.x >= 1125 &&
 		app->player->angle <= -85 &&
 		app->player->angle >= -95)
 	{
-		app->player->position.x = 1125 + impulse;
+		app->player->position.x = 1125;
 		app->player->angle = -90;
 		app->player->surviveinmoon = true;
 
@@ -90,9 +93,9 @@ bool Scene::Update(float dt)
 			moononetimesound = true;
 		}
 	}
-	else if (app->player->position.x >= 1125 + impulse)
+	else if (app->player->position.x >= 1125)
 	{
-		app->player->position.x = 1125 + impulse;
+		app->player->position.x = 1125;
 
 		app->player->dead = true;
 
@@ -103,6 +106,10 @@ bool Scene::Update(float dt)
 
 			onetimesoundexplode = true;
 		}
+	}
+	else if (app->player->position.x < 1125 && app->modcontrol->currentscene == 2)
+	{
+		app->player->grav = (G * memoon) / pow((radmoon - app->player->position.y * 50), 2);
 	}
 
 	if (app->player->surviveinmoon == true) impulse += 0.01f;
@@ -128,7 +135,7 @@ bool Scene::Update(float dt)
 	{
 		app->player->angle = 180;
 		app->modcontrol->blocky = true;
-		app->scenearth->grav = 0;
+		app->player->grav = 0;
 		app->player->position.x = app->render->camera.w / 2;
 		app->player->position.y = -145;
 		changescene = true;

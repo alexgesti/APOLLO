@@ -52,6 +52,8 @@ private:
 	bool onetimesoundexplode = false;
 
 	float impulse = 0;
+	float radmoon = 0.32f * pow(10,6);
+	float memoon = 1.36f * pow(10, 22);
 
 public:
 

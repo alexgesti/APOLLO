@@ -1,141 +1,32 @@
-﻿  App.cpp
-D:\UNI\APOLLO\Game\Source\Animation.h(58,20): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Animation.h(60,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Animation.h(67,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\SceneEarth.h(62,22): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Player.h(8,1): warning C4005: 'M_PI': redefinición de macro
-D:\UNI\APOLLO\Game\Source\External\SDL\include\SDL_stdinc.h(436): message : vea la definición anterior de 'M_PI'
-  ModuleController.cpp
-D:\UNI\APOLLO\Game\Source\Animation.h(58,20): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Animation.h(60,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Animation.h(67,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\SceneEarth.h(62,22): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Player.h(8,1): warning C4005: 'M_PI': redefinición de macro
-D:\UNI\APOLLO\Game\Source\External\SDL\include\SDL_stdinc.h(436): message : vea la definición anterior de 'M_PI'
-  Player.cpp
-D:\UNI\APOLLO\Game\Source\Animation.h(58,20): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Animation.h(60,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Animation.h(67,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Player.h(8,1): warning C4005: 'M_PI': redefinición de macro
-D:\UNI\APOLLO\Game\Source\External\SDL\include\SDL_stdinc.h(436): message : vea la definición anterior de 'M_PI'
-D:\UNI\APOLLO\Game\Source\SceneEarth.h(62,22): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Player.cpp(75,37): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+﻿  Scene.cpp
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Animation.h(58,20): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Animation.h(60,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Animation.h(67,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.h(55,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.h(56,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\SceneEarth.h(62,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Player.h(8,1): warning C4005: 'M_PI': macro redefinition
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\External\SDL\include\SDL_stdinc.h(436): message : see previous definition of 'M_PI'
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.cpp(46,37): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
           with
           [
               TYPE=float
           ]
-D:\UNI\APOLLO\Game\Source\Player.cpp(123,68): warning C4244: '-=': conversión de 'double' a 'TYPE'; posible pérdida de datos
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.cpp(66,84): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
           with
           [
               TYPE=float
           ]
-D:\UNI\APOLLO\Game\Source\Player.cpp(124,68): warning C4244: '+=': conversión de 'double' a 'TYPE'; posible pérdida de datos
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.cpp(110,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.cpp(137,51): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
           with
           [
               TYPE=float
           ]
-D:\UNI\APOLLO\Game\Source\Player.cpp(161,83): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.cpp(157,65): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\cosas de clase\FisicaII\Proyecto teoria\Game\Source\Scene.cpp(165,52): warning C4244: 'argument': conversion from 'TYPE' to 'int', possible loss of data
           with
           [
               TYPE=float
           ]
-D:\UNI\APOLLO\Game\Source\Player.cpp(190,61): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\Player.cpp(190,49): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\Player.cpp(196,69): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\Player.cpp(196,55): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\Player.cpp(198,72): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\Player.cpp(198,55): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\Player.cpp(209,61): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\Player.cpp(215,84): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-  Scene.cpp
-D:\UNI\APOLLO\Game\Source\Animation.h(58,20): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Animation.h(60,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Animation.h(67,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\SceneEarth.h(62,22): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Player.h(8,1): warning C4005: 'M_PI': redefinición de macro
-D:\UNI\APOLLO\Game\Source\External\SDL\include\SDL_stdinc.h(436): message : vea la definición anterior de 'M_PI'
-D:\UNI\APOLLO\Game\Source\Scene.cpp(45,37): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\Scene.cpp(65,84): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\Scene.cpp(132,51): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\Scene.cpp(152,65): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Scene.cpp(160,52): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-  SceneEarth.cpp
-D:\UNI\APOLLO\Game\Source\Animation.h(58,20): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Animation.h(60,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Animation.h(67,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\SceneEarth.h(62,22): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\Player.h(8,1): warning C4005: 'M_PI': redefinición de macro
-D:\UNI\APOLLO\Game\Source\External\SDL\include\SDL_stdinc.h(436): message : vea la definición anterior de 'M_PI'
-D:\UNI\APOLLO\Game\Source\SceneEarth.cpp(46,35): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\SceneEarth.cpp(47,37): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\SceneEarth.cpp(68,119): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\SceneEarth.cpp(116,75): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\SceneEarth.cpp(160,21): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\UNI\APOLLO\Game\Source\SceneEarth.cpp(183,56): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
-          with
-          [
-              TYPE=float
-          ]
-D:\UNI\APOLLO\Game\Source\SceneEarth.cpp(190,90): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-  Generando código...
-  Game.vcxproj -> D:\UNI\APOLLO\Build\Debug\Game.exe
+  Game.vcxproj -> D:\cosas de clase\FisicaII\Proyecto teoria\Build\Debug\Game.exe

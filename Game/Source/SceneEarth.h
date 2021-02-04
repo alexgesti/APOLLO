@@ -67,7 +67,6 @@ public:
 
 	fPoint gameoverpos;
 
-	float grav;
 	float drag;
 	fPoint winpos;
 };

@@ -42,6 +42,7 @@ public:
 	float acc;			// Player Acceleration
 	float acct;			// Total Acceleration
 	float angle;		// Angle
+	float grav;			// Gravity
 	float angle_rotation_value;
 
 	Animation* currentanim;

@@ -46,7 +46,7 @@ bool SceneEarth::Start()
 	winpos.y = app->render->camera.h * 2;
 	gameoverpos.x = app->render->camera.w;
 
-	grav = 9.8f;
+	app->player->grav = 9.8f;
 	cofaero = 0.37f;
 	densidad = 1.225f;
 	superficie = 0.57f;
@@ -89,15 +89,15 @@ bool SceneEarth::Update(float dt)
 				if (app->player->acc <= 0)
 				{
 					app->player->acc = 0;
-					grav += 0.05f;
-					app->player->position.y -= grav * dt;
+					app->player->grav += 0.05f;
+					app->player->position.y -= app->player->grav * dt;
 				}
 
-				if (app->player->position.y > 460 && app->player->position.y < 535 && grav > 0)
+				if (app->player->position.y > 460 && app->player->position.y < 535 && app->player->grav > 0)
 				{
-					grav -= 0.1f;
+					app->player->grav -= 0.1f;
 
-					if (grav >= -0.5f && grav <= 0.5f) app->player->win = true;
+					if (app->player->grav >= -0.5f && app->player->grav <= 0.5f) app->player->win = true;
 				}
 
 				//Win
@@ -151,14 +151,13 @@ bool SceneEarth::Update(float dt)
 	{
 		if (app->player->position.y >= 444)
 		{
-			grav = 0.0f;
+			app->player->grav = 0.0f;
 			app->player->acct = 0.0f;
 			app->player->vel = 0.0f;
 		}
 		else
 		{
-			grav = (G*mearth)/pow((mesosearth + radearth - app->player->position.y*50),2);
-
+			app->player->grav = (G*mearth)/pow((mesosearth + radearth - app->player->position.y*50),2);
 		}
 
 		//Dead
@@ -181,13 +180,17 @@ bool SceneEarth::Update(float dt)
 			app->player->angle = 90;
 			app->player->position.x = 120;
 			app->player->position.y = app->render->camera.h / 2 - 32;
+			drag = 0;
+			app->player->grav = 0;
+			app->player->acct = 0;
+			app->player->vel = 0;
 		
 			app->modcontrol->currentscene = 2;
 		}
 	}
 
 	if(app->player->vel < 10 && app->player->vel > -10)
-	drag = (cofaero * 0.5 * densidad * app->player->vel * app->player->vel * superficie )/ 2*pow(10,4);
+	drag = cofaero * 0.5 * densidad * app->player->vel * app->player->vel * superficie;
 
 	// Lose Screen 
 	if (app->player->explosionanim.FinishedAlready)
