@@ -60,6 +60,8 @@ public:
 	bool surviveinmoon = false;
 	bool hurtonetime = false;
 
+	float mcohete = 2 * pow(10, 4);
+
 private:
 	SDL_Texture* spritesheet = nullptr;
 	SDL_Texture* water = nullptr;

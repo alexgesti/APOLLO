@@ -54,9 +54,9 @@ private:
 	bool gameoveronetimemusic = false;
 	bool onetimesoundexplode = false;
 
-	float cofaero;
-	float densidad;
-	float superficie;
+	float cofaero = 0.37f;
+	float densidad = 1.225f;
+	float superficie = 0.57f;
 	float radearth = 1180000;
 	float mesosearth = 22200;
 	float mearth = 1.1f * pow(10, 24);

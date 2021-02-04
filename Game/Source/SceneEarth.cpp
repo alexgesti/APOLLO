@@ -47,9 +47,6 @@ bool SceneEarth::Start()
 	gameoverpos.x = app->render->camera.w;
 
 	app->player->grav.y = 9.8f;
-	cofaero = 0.37f;
-	densidad = 1.225f;
-	superficie = 0.57f;
 
 	return true;
 }
@@ -67,6 +64,8 @@ bool SceneEarth::Update(float dt)
 	app->render->camera.x = 0;
 	if(app->player->position.y >= 0 && app->player->position.y <= 3139) app->render->camera.y = -app->player->position.y * 1.5;
 
+	app->player->grav.x = 0;
+
 	if (app->modcontrol->blockx == false)
 	{
 		//Buoyancy
@@ -81,14 +80,14 @@ bool SceneEarth::Update(float dt)
 					watersoundone = true;
 				}
 
-				if (app->player->acc.y >= 0)
+				/*if (app->player->acc >= 0)
 				{
-					app->player->acc.y -= 0.15f;
+					app->player->acc -= 0.15f;
 				}
 
-				if (app->player->acc.y <= 0)
+				if (app->player->acc <= 0)
 				{
-					app->player->acc.y = 0;
+					app->player->acc = 0;
 					app->player->grav.y += 0.05f;
 					app->player->position.y -= app->player->grav.y * dt;
 				}
@@ -98,7 +97,7 @@ bool SceneEarth::Update(float dt)
 					app->player->grav.y -= 0.1f;
 
 					if (app->player->grav.y >= -0.5f && app->player->grav.y <= 0.5f) app->player->win = true;
-				}
+				}*/
 
 				//Win
 				if (app->player->win && app->player->surviveinmoon == true)
@@ -143,8 +142,10 @@ bool SceneEarth::Update(float dt)
 		}
 		else 
 		{
-			app->player->vel.y = 1;
-			if(app->player->acc.y < 7.0f) app->player->acc.y += 0.05f;
+			app->player->grav.y = (G * mearth) / pow((mesosearth + radearth - app->player->position.y * 50), 2);
+
+			if (app->player->vel.y > -1 && app->player->vel.y < 0)
+				drag = -1 * cofaero * 0.5 * densidad * app->player->vel.y * app->player->vel.y * superficie;
 		}
 	}
 	else
@@ -155,10 +156,7 @@ bool SceneEarth::Update(float dt)
 			app->player->acct.y = 0.0f;
 			app->player->vel.y = 0.0f;
 		}
-		else
-		{
-			app->player->grav.y = (G*mearth)/pow((mesosearth + radearth - app->player->position.y*50),2);
-		}
+		else app->player->grav.y = (G*mearth) / pow((mesosearth + radearth - app->player->position.y * 50),2);
 
 		//Dead
 		if(app->player->position.y > 444 && drag > 12)
@@ -181,16 +179,19 @@ bool SceneEarth::Update(float dt)
 			app->player->position.x = 120;
 			app->player->position.y = app->render->camera.h / 2 - 32;
 			drag = 0;
-			app->player->grav.y = 0;
-			app->player->acct.y = 0;
-			app->player->vel.y = 0;
+			app->player->acc = { 0, 0 };
+			app->player->grav = { 0, 0 };
+			app->player->acct = { 0, 0 };
+			app->player->vel = { 50, 0 };
 		
 			app->modcontrol->currentscene = 2;
 		}
-	}
 
-	if(app->player->vel.y < 10 && app->player->vel.y > -10)
-	drag = cofaero * 0.5 * densidad * app->player->vel.y * app->player->vel.y * superficie;
+		if (app->player->vel.y < 10 && app->player->vel.y > 0)
+			drag = cofaero * 0.5 * densidad * app->player->vel.y * app->player->vel.y * superficie;
+		else if (app->player->vel.y > -1 && app->player->vel.y < 0)
+			drag = -1 * cofaero * 0.5 * densidad * app->player->vel.y * app->player->vel.y * superficie;
+	}
 
 	// Lose Screen 
 	if (app->player->explosionanim.FinishedAlready)
