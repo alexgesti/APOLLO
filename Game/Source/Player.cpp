@@ -113,7 +113,7 @@ bool Player::Update(float dt)
 			}
 		}
 
-		acct.y = acc.y - grav.y - app->scenearth->drag + app->scenearth->flot;
+		acct.y = acc.y - grav.y - app->scenearth->drag/mcohete + app->scenearth->flot/mcohete;
 		acct.x = acc.x + grav.x;
 
 		// Verlet
@@ -128,7 +128,7 @@ bool Player::Update(float dt)
 		// Rotation
 		if (app->modcontrol->blockx == false)
 		{
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && ban==false)
 			{
 				if (angle_rotation_value > -2) angle_rotation_value -= 0.1f;
 				else angle_rotation_value = -2;
@@ -138,7 +138,7 @@ bool Player::Update(float dt)
 					vel.x = 175;
 				}
 			}
-			else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && ban == false)
 			{
 				if (angle_rotation_value < 2) angle_rotation_value += 0.1f;
 				else angle_rotation_value = 2;

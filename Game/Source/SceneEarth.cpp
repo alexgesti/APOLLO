@@ -41,7 +41,7 @@ bool SceneEarth::Start()
 	winsound = app->audio->LoadFx("Assets/Audio/Music/win.ogg");
 	watersound = app->audio->LoadFx("Assets/Audio/Fx/Characters/water.ogg");
 
-	//app->audio->PlayMusic("Assets/Audio/Music/pepsiman.ogg", 0);
+	app->audio->PlayMusic("Assets/Audio/Music/pepsiman.ogg", 0);
 
 	winpos.y = app->render->camera.h * 2;
 	gameoverpos.x = app->render->camera.w;
@@ -71,6 +71,7 @@ bool SceneEarth::Update(float dt)
 		//Buoyancy
 		if (app->player->position.y > 460)
 		{
+			app->player->ban = true;
 			if (app->player->position.x < 385 || app->player->position.x > 910)
 			{		
 				if (watersoundone == false)
@@ -79,26 +80,14 @@ bool SceneEarth::Update(float dt)
 
 					watersoundone = true;
 				}
-				flot = vagua * dagua * 9.8f;
+				drag = aquadrag * app->player->vel.y;
+				vagua = app->player->position.y - 460;
+				flot = dagua * vagua * 9.8f;
 
-				/*if (app->player->acc >= 0)
+				if (app->player->position.y > 460 && app->player->position.y < 535 )
 				{
-					app->player->acc -= 0.15f;
+					if (app->player->vel.y >= -0.1f && app->player->vel.y <= 0.1f) app->player->win = true;
 				}
-
-				if (app->player->acc <= 0)
-				{
-					app->player->acc = 0;
-					app->player->grav.y += 0.05f;
-					app->player->position.y -= app->player->grav.y * dt;
-				}
-
-				if (app->player->position.y > 460 && app->player->position.y < 535 && app->player->grav.y > 0)
-				{
-					app->player->grav.y -= 0.1f;
-
-					if (app->player->grav.y >= -0.5f && app->player->grav.y <= 0.5f) app->player->win = true;
-				}*/
 
 				//Win
 				if (app->player->win && app->player->surviveinmoon == true)
@@ -145,7 +134,7 @@ bool SceneEarth::Update(float dt)
 		{
 			app->player->grav.y = (G * mearth) / pow((mesosearth + radearth - app->player->position.y * 50), 2);
 
-			if (app->player->vel.y > -1 && app->player->vel.y < 0)
+			if (app->player->vel.y < 0)
 				drag = -1 * cofaero * 0.5 * densidad * app->player->vel.y * app->player->vel.y * superficie;
 		}
 	}
@@ -188,9 +177,9 @@ bool SceneEarth::Update(float dt)
 			app->modcontrol->currentscene = 2;
 		}
 
-		if (app->player->vel.y < 10 && app->player->vel.y > 0)
+		if (app->player->vel.y > 0)
 			drag = cofaero * 0.5 * densidad * app->player->vel.y * app->player->vel.y * superficie;
-		else if (app->player->vel.y > -1 && app->player->vel.y < 0)
+		else if (app->player->vel.y < 0)
 			drag = -1 * cofaero * 0.5 * densidad * app->player->vel.y * app->player->vel.y * superficie;
 	}
 

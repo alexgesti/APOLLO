@@ -60,8 +60,9 @@ private:
 	float radearth = 1180000;			//radio de la tierra escalado al mapa
 	float mesosearth = 22200;			//distancia hasta la capa de la mesosfera escalado al mapa
 	float mearth = 1.1f * pow(10, 24);	//masa de la tierra escalado al mapa
-	float vagua = 74.9f;				//Volumen de una piscina grande
-	float dagua = 997;					//densidad del agua (Kg/m^3)
+	float vagua;						//Volumen de una piscina grande
+	float dagua = 997;					//densidad liquido
+	float aquadrag = 15000;
 
 public:
 	float flot;							//fuerza de flotacion
