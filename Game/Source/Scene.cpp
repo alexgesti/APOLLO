@@ -39,7 +39,6 @@ bool Scene::Start()
 	moontex = app->tex->Load("Assets/Screens/Gameplay/landplace.png");
 	
 	gameovertex = app->tex->Load("Assets/Screens/Gameplay/gameover.png");
-	gameoversound = app->audio->LoadFx("Assets/Audio/Music/gameover.ogg");
 	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
 	moonsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/moon.ogg");
 
@@ -116,7 +115,7 @@ bool Scene::Update(float dt)
 	{
 		if (gameoveronetimemusic == false)
 		{
-			app->audio->PlayFx(gameoversound);
+			app->audio->PlayMusic("Assets/Audio/Music/gameover.ogg");
 
 			gameoveronetimemusic = true;
 		}

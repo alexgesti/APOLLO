@@ -41,23 +41,23 @@ private:
 	SDL_Texture* moontex;
 	SDL_Texture* gameovertex;
 
-	fPoint gameoverpos;
-
-	uint gameoversound;
 	uint explosionsound;
 	uint moonsound;
+
+	float radmoon = 0.32f * pow(10,6);		//radio de la luna escalado al mapa
+	float dgravmoon = 56250;				//distancia del punto inicial de la scene al la luna, pasado mediante PIXELS TO METERS
+	float memoon = 1.36f * pow(10, 22);		//masa de la luna escalado al mapa
+
+public:
+
+	fPoint gameoverpos;
 
 	bool gameoveronetimemusic = false;
 	bool moononetimesound = false;
 	bool onetimesoundexplode = false;
 
-	float radmoon = 0.32f * pow(10,6);		//radio de la luna escalado al mapa
-	float dgravmoon = 56250;				//distancia del punto inicial de la scene al la luna, pasado mediante PIXELS TO METERS
-	float memoon = 1.36f * pow(10, 22);		//masa de la luna escalado al mapa
 	float velmoon = 0;						//velocidad inicial de la luna
 	float posmoon;							//posicion de la luna
-
-public:
 
 	bool changescene = false;
 

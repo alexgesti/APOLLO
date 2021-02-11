@@ -31,6 +31,8 @@ public:
 	//	Called everytime 1 screen changes
 	bool CleanUp();
 
+	bool Reset();
+
 public:
 	bool blockx = true;
 	bool blocky = false;

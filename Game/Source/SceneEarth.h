@@ -44,15 +44,8 @@ private:
 
 	SDL_Texture* terratext;
 
-	uint gameoversound;
 	uint explosionsound;
-	uint winsound;
 	uint watersound;
-
-	bool watersoundone = false;
-	bool winonetimemusic = false;
-	bool gameoveronetimemusic = false;
-	bool onetimesoundexplode = false;
 
 	float cofaero = 0.37f;				//Coeficiente de friccion
 	float densidad = 1.225f;			//densidad del aire
@@ -60,7 +53,6 @@ private:
 	float radearth = 1180000;			//radio de la tierra escalado al mapa
 	float mesosearth = 22200;			//distancia hasta la capa de la mesosfera escalado al mapa
 	float mearth = 1.1f * pow(10, 24);	//masa de la tierra escalado al mapa
-	float vagua;						//Volumen de una piscina grande
 	float dagua = 997;					//densidad liquido
 	float aquadrag = 15000;
 
@@ -72,6 +64,13 @@ public:
 
 	float drag;
 	fPoint winpos;
+
+	bool watersoundone = false;
+	bool winonetimemusic = false;
+	bool gameoveronetimemusic = false;
+	bool onetimesoundexplode = false;
+
+	float vagua;						//Volumen de una piscina grande 
 };
 
 #endif // __SCENEEARTH_H__

@@ -100,6 +100,8 @@ bool ModuleController::Update(float dt)
 		break;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) Reset();
+
 	return true;
 }
 
@@ -117,4 +119,61 @@ bool ModuleController::CleanUp()
 	}
 
 	return ret;
+}
+
+bool ModuleController::Reset()
+{
+	//ModuleController
+	blockx = true;
+	blocky = false;
+	capped = false;
+	showcollider = false;
+	showbuttons = false;
+	currentscene = 1;
+
+	//Player
+	app->player->ban = false;
+	app->player->dead = false;
+	app->player->win = false;
+	app->player->surviveinmoon = false;
+	app->player->hurtonetime = false;
+	app->player->currentanim = &app->player->moveanim;
+	app->player->current2anim = &app->player->explosionanim;
+	app->player->position.x = app->render->camera.w / 2;
+	app->player->position.y = 444;
+	app->player->vel.x = 0;
+	app->player->vel.y = 0;
+	app->player->acc.x = 0;
+	app->player->acc.y = 0;
+	app->player->acct.x = 0;
+	app->player->acct.y = 0;
+	app->player->angle = 0;
+	app->player->grav.x = 0;
+	app->player->grav.y = 9.8f;
+	app->player->angle_rotation_value = 0;
+	app->player->explosionanim.Reset();
+
+	//Scene
+	app->scene->changescene = false;
+	app->scene->gameoverpos.x = app->render->camera.w;
+	app->scene->gameoveronetimemusic = false;
+	app->scene->moononetimesound = false;
+	app->scene->onetimesoundexplode = false;
+	app->scene->posmoon = app->render->camera.w - 216;
+	app->scene->velmoon = 0;
+
+	//SceneEarth
+	app->scenearth->flot = 0;
+	app->scenearth->gameoverpos.x = app->render->camera.w;
+	app->scenearth->drag = 0;
+	app->scenearth->winpos.y = app->render->camera.h * 2;
+	app->scenearth->watersoundone = false;
+	app->scenearth->winonetimemusic = false;
+	app->scenearth->gameoveronetimemusic = false;
+	app->scenearth->onetimesoundexplode = false;
+	app->scenearth->vagua = 0;
+
+	//Audio
+	app->audio->PlayMusic("Assets/Audio/Music/pepsiman.ogg", 0);
+	return true;
 }

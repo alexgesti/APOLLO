@@ -36,9 +36,7 @@ bool SceneEarth::Start()
 	terratext = app->tex->Load("Assets/Screens/Gameplay/terrariacaptura.png");
 
 	gameovertex = app->tex->Load("Assets/Screens/Gameplay/gameover.png");
-	gameoversound = app->audio->LoadFx("Assets/Audio/Music/gameover.ogg");
 	explosionsound = app->audio->LoadFx("Assets/Audio/Fx/Characters/bombexplode.wav");
-	winsound = app->audio->LoadFx("Assets/Audio/Music/win.ogg");
 	watersound = app->audio->LoadFx("Assets/Audio/Fx/Characters/water.ogg");
 
 	app->audio->PlayMusic("Assets/Audio/Music/pepsiman.ogg", 0);
@@ -94,8 +92,7 @@ bool SceneEarth::Update(float dt)
 				{
 					if (winonetimemusic == false)
 					{
-						app->audio->PlayMusic("", 0);
-						app->audio->PlayFx(winsound);
+						app->audio->PlayMusic("Assets/Audio/Music/win.ogg");
 
 						winonetimemusic = true;
 					}
@@ -104,7 +101,7 @@ bool SceneEarth::Update(float dt)
 
 					if (winpos.y <= app->render->camera.h) winpos.y = app->render->camera.h;
 				}
-				else if (app->player->win && app->player->surviveinmoon == false)
+				else if (app->player->win && app->player->surviveinmoon == false )
 				{
 					app->player->dead = true;
 
@@ -188,7 +185,7 @@ bool SceneEarth::Update(float dt)
 	{
 		if (gameoveronetimemusic == false)
 		{
-			app->audio->PlayFx(gameoversound);
+			app->audio->PlayMusic("Assets/Audio/Music/gameover.ogg");
 
 			gameoveronetimemusic = true;
 		}
